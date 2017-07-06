@@ -1,0 +1,40 @@
+yii-1.1.16,yii-1.1.17
+แก้ไข framework\logging\CEmailLogRoute.php - 75 
+function sendEmail
+comment อันเก่าเปลี่ยนเป็น
+$mail = new SendMail;
+$mail->body = $message;
+$mail->subject = $subject;
+$mail->to = $email;
+$mail->from = Yii::app()->params['adminEmail'];
+$mail->send();
+		
+add file -  framework\gii\generators\model\templates\app
+	
+---------------------------------------------
+yii-1.1.14, 1.1.15
+
+framework\YiiBase.php - add 725
+'COciSchemaMod' => '/db/schema/oci/COciSchemaMod.php',
+
+
+framework\logging\CEmailLogRoute.php - 75
+
+add file -  framework\gii\generators\model\templates\app
+
+
+yii - old
+mod - 2
+
+framework\YiiBase.php - add 707
+'COciSchemaMod' => '/db/schema/oci/COciSchemaMod.php',
+
+framework\yiilite.php - add 420
+'COciSchemaMod' => '/db/schema/oci/COciSchemaMod.php',
+
+framework\logging\CEmailLogRoute.php - 75
+
+///////
+mod ext.bootstrap
+
+TbSelect2 เพิ่ม  86-89

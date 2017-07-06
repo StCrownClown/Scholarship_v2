@@ -1,0 +1,420 @@
+body
+{
+    margin: 0;
+    padding: 0 !important;
+    color: #555;
+    font: normal 10pt Arial,Helvetica,sans-serif;
+    background: #EFEFEF;
+    font-size: 100%;
+
+}
+
+#page
+{
+    /*    margin-top: 5px;
+        margin-bottom: 5px;
+        background: #ebf4f8;
+        border: 1px solid #C9E0ED;*/
+}
+
+#header
+{
+    /*    margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #C9E0ED;*/
+    background: #A8CDD7;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+#content
+{
+    padding: 0px;
+}
+
+#sidebar
+{
+    padding: 20px 20px 20px 0;
+}
+
+#footer
+{
+    /*    padding: 10px;
+        margin: 10px 20px;*/
+
+    padding-top: 20px;
+    margin-top: 20px;
+    font-size: 0.8em;
+    text-align: center;
+    /*border-top: 1px solid #C9E0ED;*/
+    background: #A8CDD7;
+
+}
+
+#logo
+{
+    padding: 0px;
+    font-size: 100%;
+}
+
+#mainmenu
+{
+    background:white url(bg.gif) repeat-x left top;
+}
+
+#mainmenu ul
+{
+    padding:6px 20px 5px 20px;
+    margin:0px;
+}
+
+#mainmenu ul li
+{
+    display: inline;
+}
+
+#mainmenu ul li a
+{
+    color:#ffffff;
+    background-color:transparent;
+    font-size:12px;
+    font-weight:bold;
+    text-decoration:none;
+    padding:5px 8px;
+}
+
+#mainmenu ul li a:hover, #mainmenu ul li.active a
+{
+    color: #6399cd;
+    background-color:#EFF4FA;
+    text-decoration:none;
+}
+
+div.flash-error, div.flash-notice, div.flash-success
+{
+    padding:.8em;
+    margin-bottom:1em;
+    border:2px solid #ddd;
+}
+
+div.flash-error
+{
+    background:#FBE3E4;
+    color:#8a1f11;
+    border-color:#FBC2C4;
+}
+
+div.flash-notice
+{
+    background:#FFF6BF;
+    color:#514721;
+    border-color:#FFD324;
+}
+
+div.flash-success
+{
+    background:#E6EFC2;
+    color:#264409;
+    border-color:#C6D880;
+}
+
+div.flash-error a
+{
+    color:#8a1f11;
+}
+
+div.flash-notice a
+{
+    color:#514721;
+}
+
+div.flash-success a
+{
+    color:#264409;
+}
+
+div.form .rememberMe label
+{
+    display: inline;
+}
+
+div.view
+{
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #C9E0ED;
+}
+
+div.breadcrumbs
+{
+    font-size: 0.9em;
+    padding: 5px 20px;
+}
+
+div.breadcrumbs span
+{
+    font-weight: bold;
+}
+
+div.search-form
+{
+    padding: 10px;
+    margin: 10px 0;
+    background: #eee;
+}
+
+.portlet
+{
+
+}
+
+.portlet-decoration
+{
+    padding: 3px 8px;
+    background: #B7D6E7;
+    border-left: 5px solid #6FACCF;
+}
+
+.portlet-title
+{
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    color: #298dcd;
+}
+
+.portlet-content
+{
+    font-size:0.9em;
+    margin: 0 0 15px 0;
+    padding: 5px 8px;
+    background:#EFFDFF;
+}
+
+.portlet-content ul
+{
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+}
+
+.portlet-content li
+{
+    padding: 2px 0 4px 0px;
+}
+
+.operations
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.operations li
+{
+    padding-bottom: 2px;
+}
+
+.operations li a
+{
+    font: bold 12px Arial;
+    color: #0066A4;
+    display: block;
+    padding: 2px 0 2px 8px;
+    line-height: 15px;
+    text-decoration: none;
+}
+
+.operations li a:visited
+{
+    color: #0066A4;
+}
+
+.operations li a:hover
+{
+    background: #80CFFF;
+}
+
+div.container{
+    /*    padding-left: 5px;
+        padding-right: 5px;*/
+}
+div.header_index_view{
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FAFAFA), color-stop(100%, #E9E9E9));
+        padding-left: 10px;
+        padding-top: 10px;
+}
+div.detail_index_view{
+        background-color: #FFFFFF !important; 
+        padding: 10px;
+        padding-top: 0px;
+      
+}
+h3{
+    line-height: 15px !important;
+}
+div#section1,#section2,#section3,#section4,#section5,#section6,#section7,#section8,#section9,#section10,.border_detail{
+    display: block;
+    margin: 0 0 15px;
+    /*line-height: 20px;*/
+    padding-top: 0px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+
+.form-actions {
+    padding: 19px 20px 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #FFFFFF !important; 
+    border-top: 0px !important; 
+    width: 95%;
+}
+.navbar {
+    overflow: visible;
+    margin-bottom: 0px !important;
+}
+
+#alertError{
+    position: absolute;
+    left: 40%;
+    width: 500px;
+    z-index: 100;
+}
+table, th, td {
+    vertical-align: top;
+}
+@media only screen and (min-width: 150px) and (max-width: 319px){ 
+    *{
+        font-size: 12px !important;
+    }
+    h1{
+        font-size: 22px !important;
+    }
+    h2{
+        font-size: 20px !important;
+    }
+    h3{
+        font-size: 16px !important;
+    }
+    th{
+        font-size: 10px !important;
+    }
+    td{
+        font-size: 10px !important;
+        width: 100px;
+    }
+    label {
+        font-size: 12px !important;
+    }
+    .required{
+        font-size: 12px;
+    }
+    a.btn.btn-small {
+        width: 5px;
+    }
+    div#footer
+    {
+        font-size: 0.8em !important;
+    }
+
+
+}
+
+@media only screen and (min-width: 320px) and (max-width: 479px){ 
+
+    *{
+        font-size: 12px !important;
+    }
+    h1{
+        font-size: 22px !important;
+    }
+    h2{
+        font-size: 20px !important;
+    }
+    h3{
+        font-size: 16px !important;
+    }
+    th{
+        font-size: 10px !important;
+    }
+    td{
+        font-size: 10px !important;
+        width: 100px;
+    }
+    label {
+        font-size: 12px !important;
+    }
+    .required{
+        font-size: 12px;
+    }
+    a.btn.btn-small {
+        width: 5px;
+    }
+    div#footer
+    {
+        font-size: 0.8em !important;
+    }
+
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px){ 
+    *{
+        font-size: 12px !important;
+    }
+    h1{
+        font-size: 22px !important;
+    }
+    h2{
+        font-size: 20px !important;
+    }
+    h3{
+        font-size: 16px !important;
+    }
+    th{
+        font-size: 10px !important;
+    }
+    td{
+        font-size: 10px !important;
+        width: 100px;
+    }
+    label {
+        font-size: 12px !important;
+    }
+    .required{
+        font-size: 12px;
+    }
+    a.btn.btn-small {
+        width: 5px;
+    }
+    div#footer
+    {
+        font-size: 0.8em !important;
+    }
+
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){ 
+
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1999px){ 
+
+
+}
+
+
+
+
+
+
+
+

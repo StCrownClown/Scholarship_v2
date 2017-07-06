@@ -1,0 +1,9 @@
+$this->widget('application.extensions.kNavTab.kNavTab',array(
+				'actionTab'=>1,
+				'groupColor'=>array('group_1'=>'#F5D0A9','group_2'=>'#F2F5A9','group_3'=>'#F6CECE'),
+				'tab'=>array(
+							array("name"=>"aaaaaaa","tabColor"=>"group_1","type"=>"text","detail"=>'afasf','htmlOptions'=>array('onclick'=>"alert('a');"),'classTab'=>'aaa'),
+							array("name"=>"bbbbbb","type"=>"ajax","url"=>Yii::app()->createUrl('site/home')),
+							array("name"=>"cccccccc","type"=>"goto","url"=>Yii::app()->createUrl('site/home')),
+						),
+			));

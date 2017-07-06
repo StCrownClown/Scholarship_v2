@@ -1,0 +1,116 @@
+	public function actionExport()
+	{
+		$type = $_GET['type'];
+		Yii::import('application.extensions.PHPExcel.PHPExcel');
+		$objPHPExcel = new PHPExcel();
+		// Set document properties
+		$objPHPExcel->getProperties()->setCreator("nstda")
+									 ->setLastModifiedBy("nstda")
+									 ->setTitle("Document")
+									 ->setSubject("Document")
+									 ->setDescription("Document")
+									 ->setKeywords("pdf php")
+									 ->setCategory("Document");
+
+		
+		$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Hello')
+            ->setCellValue('B2', 'world!')
+            ->setCellValue('C1', 'ฟหกดหฟกด')
+            ->setCellValue('D2', 'world!');
+
+		// Rename worksheet
+		$objPHPExcel->getActiveSheet()->setTitle('Report');
+		
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$objPHPExcel->setActiveSheetIndex(0);
+		
+		$filename = date('Ymd');
+		
+		if($type == 'xls'){
+			$app = 'application/vnd.ms-excel';
+			$typeName = 'Excel5';
+		}else if($type == 'csv'){
+			$app = 'text/csv';
+			$typeName = 'CSV';
+		}else if($type == 'pdf'){
+			$app = 'application/pdf';
+			$typeName = 'PDF';
+		}
+		
+		
+		/*else if($type == 'xlsx'){
+			$app = 'application/vnd.ms-excel';
+			$typeName = 'Excel2007'; // Required PHP Version 5.2.9 +
+		}*/
+		
+		
+		header('Content-Type: '.$app.'; charset=utf-8');
+		header('Content-Disposition: attachment;filename="'.$filename.'.'.$type.'"');
+		header('Cache-Control: max-age=0');
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, $typeName);
+		$objWriter->save('php://output');
+	}
+
+
+$sheet->getActiveSheet()->getStyle('A1')->getFill()->getStartColor()->setRGB('FF0000');
+
+ผสายเซล
+$objPHPExcel->getActiveSheet()->mergeCells("A3:A5");
+
+กรอบ
+$objPHPExcel->getActiveSheet()->getStyle('A1:L2')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+$objPHPExcel->getActiveSheet()->getStyle("B3")->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("B8")->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("B3:B8")->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("B3:B8")->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	
+กว้าง
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(16);
+$objPHPExcel->getActiveSheet()->getColumnDimension("E")->setAutoSize(true);
+
+แนวนอน
+$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+
+ตัดข้อความ
+$objPHPExcel->getActiveSheet()->getStyle("A1:E10")->getAlignment()->setWrapText(true);
+
+ตำแหน่งข้อความ
+$objPHPExcel->getActiveSheet()->getStyle("A1:E$i")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+const 	VERTICAL_BOTTOM = 'bottom'
+const 	VERTICAL_TOP = 'top'
+const 	VERTICAL_CENTER = 'center'
+const 	VERTICAL_JUSTIFY = 'justify'
+
+$objPHPExcel->getActiveSheet()->getStyle('C6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+const 	HORIZONTAL_GENERAL = 'general'
+const 	HORIZONTAL_LEFT = 'left'
+const 	HORIZONTAL_RIGHT = 'right'
+const 	HORIZONTAL_CENTER = 'center'
+const 	HORIZONTAL_JUSTIFY = 'justify'
+
+
+value
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D1","จำนวนรายการที่ทำได้ตาม SLA")
+									->setCellValue("E", "=(E10+E12)");	
+	
+	
+	
+http://www.contao-docs.org/docs/PHPExcel/html/class_p_h_p_excel___style___font.html	
+	
+	
+	// insert image
+$objDrawing = new PHPExcel_Worksheet_Drawing();
+$objDrawing->setName('EMP');
+$objDrawing->setDescription('EMP');
+$objDrawing->setPath($dir); // path
+$objDrawing->setWidth(115);
+//$objDrawing->setHeight(120);
+$objDrawing->setCoordinates('A1');
+$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());	
+	
+	
+	
+	
