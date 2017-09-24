@@ -1,6 +1,8 @@
 # Scholarship_v2
 PHP (Yii Framework) ระบบนักเรียนทุน
 
+test here >>> www.biotec.or.th/nstdaScholarship_v2_test/index.php/scholar/index
+
 ![alt text](https://github.com/StCrownClown/Scholarship_v2/blob/master/Scholarship_v201.png "Scholarship_v2 1")
 
 ![alt text](https://github.com/StCrownClown/Scholarship_v2/blob/master/Scholarship_v202.png "Scholarship_v2 2")
