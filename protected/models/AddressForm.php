@@ -63,7 +63,8 @@ class AddressForm extends CActiveRecord {
             array('address', 'length', 'max' => 255),
             array('subdistrict, building, village', 'length', 'max' => 100),
             array('room, moo, road', 'length', 'max' => 10),
-            array('floor, alley', 'length', 'max' => 5),
+            array('floor', 'length', 'max' => 5),
+            array('alley', 'length', 'max' => 50),
             array('address, first_created, last_updated', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.

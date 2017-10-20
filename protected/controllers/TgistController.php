@@ -109,9 +109,6 @@ class TgistController extends Controller {
                 'prj_nstda'=>'แหล่งทุนวิจัยโครงการหลัก -  ได้รับอนุมัติโครงการแล้วจาก สวทช. ',
                 'prj_other'=>'แหล่งทุนวิจัยโครงการหลัก -  อื่นๆ ',
                 'prj_none'=>'แหล่งทุนวิจัยโครงการหลัก -  ไม่มี',
-                'ind_name'=>'บริษัท/ภาคอุตสาหกรรม - ชื่อบริษัท',
-                'ind_sum'=>'บริษัท/ภาคอุตสาหกรรม - สรุปประมาณการเงินสนับสนุนจนจบโครงการ',
-                'ind_desc'=>'โปรดระบุสินค้าและบริการของบริษัท/ภาคอุตสาหกรรม ',
                 'relevance_automotive'=>'ความเกี่ยวข้องของโครงการวิจัยย่อยกับกลุ่มอุตสาหกรรม - อุตสาหกรรมยานยนต์สมัยใหม่',
                 'relevance_electronics'=>'ความเกี่ยวข้องของโครงการวิจัยย่อยกับกลุ่มอุตสาหกรรม - อุตสาหกรรมอิเล็กทรอนิกส์อัจฉริยะ',
                 'relevance_tourism'=>'ความเกี่ยวข้องของโครงการวิจัยย่อยกับกลุ่มอุตสาหกรรม - อุตสาหกรรมการท่องเที่ยวกลุ่มรายได้ดีและการท่องเที่ยวเชิงสุขภาพ',
@@ -162,14 +159,6 @@ class TgistController extends Controller {
                 'stu_idcard'=>'เลขประจำตัวประชาชน นศ.',
                 'stu_email'=>'อีเมล์ นศ.',
                 'stu_mobile'=>'เบอร์โทรศัพท์มือถือ นศ.',
-                'ind_name'=>'ชื่อภาคอุตสาหกรรม/บริษัท',
-                'ind_fullname'=>'ชื่อผู้ประสานงาน',
-                'ind_mobile'=>'เบอร์โทรศัพท์มือถือ ผู้ประสานงาน',
-                'ind_email'=>'อีเมล์ ชื่อผู้ประสานงาน',
-                'ind_type_manufacture'=>'ประเภทของกิจการ',
-//                'ind_type_export'=>'ประเภทการส่งออก',
-//                'ind_type_service'=>'ประเภทการบริการ',
-                'ind_type_description'=>'สินค้าและบริการ',
                 'status'=>'สถานะใบสมัคร',
                 'last_updated'=>'อัพเดทล่าสุดเมื่อ'
             );
@@ -242,15 +231,6 @@ class TgistController extends Controller {
                 'prj_effect'=>'ผลกระทบต่อหน่วยงานด้านเศรษฐกิจและ สังคม ',
                 'prj_relevance'=>'ความเกี่ยวข้องของโครงการวิจัยย่อยกับกลุ่มอุตสาหกรรม',
                 'itap'=>'ITAP',
-                'ind_incash_other'=>'ค่าใช้จ่าย IN-CASH',
-                'ind_inkind_other'=>'ค่าใช้จ่าย IN-KIND',
-    //            
-                'ind_name'=>'ชื่อบริษัท',
-                'ind_email'=>'อีเมล์',
-                'ind_fullname'=>'ชื่อผู้ประสานงาน',
-                'ind_mobile'=>'เบอร์โทรศัพท์มือถือ',
-                'ind_comment'=>'ความคิดเห็นต่อผู้รับทุน',
-                'ind_address'=>'ที่อยู่',
 
     //            
                 'stu_edu_status'=>'สถานะ:กำลังศึกษา/จบการศึกษา',
@@ -279,13 +259,6 @@ class TgistController extends Controller {
                 'workwithproject_text2'=>'ประวัติการทำงาน/ประสบการณ์ทำงาน(2)',
                 'workwithproject_text3'=>'ประวัติการทำงาน/ประสบการณ์ทำงาน(3)',
     //            
-                'ind_name2'=>'ชื่อบริษัท/สถานประกอบการ',
-                'ind_type_manufacture'=>'ประเภทของกิจการ',
-                'ind_type_description'=>'สินค้าและบริการ',
-
-                'incash_other'=>'ค่าใช้จ่าย IN-CASH',
-                'inkind_other'=>'ค่าใช้จ่าย IN-KIND',
-                'ind_support_desc'=>'โครงการวิจัยช่วยสนับสนุนภาคอุสาหกรรมและเกี่ยวข้องกับ 10 อุตสาหกรรม ระบุ'
             );
 
             ExcelExporter::sendAsXLS('ExportExcel', $data, false, true, $fields);
@@ -342,11 +315,15 @@ class TgistController extends Controller {
                 $zip->addDir($tgist['running']."/"."Student"); // Add Folder
                 $fd_pro_men = (empty($tgist['pro_id'])?"Mentor":"Professor");
                 $zip->addDir($tgist['running']."/".$fd_pro_men); // Add Folder
-                $zip->addDir($tgist['running']."/"."Industrial"); // Add Folder
    
                 if(is_dir($path.$tgist['stu_id'])){
                     $pathStu = "/"."Student/";
                     $file = $Sch->student->image_path;
+                    if (is_file($path.$file)) {
+                        $newFile = $tgist['running'].$pathStu.basename($file);
+                        $zip->addFile($path.$file, $newFile);
+                    }
+                    $file = $Sch->scholarTgist->student_proposal_path;
                     if (is_file($path.$file)) {
                         $newFile = $tgist['running'].$pathStu.basename($file);
                         $zip->addFile($path.$file, $newFile);
@@ -412,24 +389,6 @@ class TgistController extends Controller {
 //                    }
 //                }
                 
-                if(is_dir($path.$tgist['ind_id'])){
-                    $pathInd = "/"."Industrial/";
-                    $file = $Sch->industrial->image_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                    $file = $Sch->scholarTgist->industrial_certificate_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                    $file = $Sch->scholarTgist->industrial_attachment_other_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                }
             }
             
             $zip->save();
@@ -493,7 +452,6 @@ class TgistController extends Controller {
                 $zip->addDir($tgist['running']."/"."Student"); // Add Folder
                 $fd_pro_men = (empty($tgist['pro_id'])?"Mentor":"Professor");
                 $zip->addDir($tgist['running']."/".$fd_pro_men); // Add Folder
-                $zip->addDir($tgist['running']."/"."Industrial"); // Add Folder
                 
                 if(is_dir($path.$tgist['stu_id'])){
                     $pathStu = "/"."Student/";
@@ -502,6 +460,7 @@ class TgistController extends Controller {
                         $newFile = $tgist['running'].$pathStu.basename($file);
                         $zip->addFile($path.$file, $newFile);
                     }
+                    $file = $Sch->scholarTgist->student_proposal_path;
                     if (is_file($path.$file)) {
                         $newFile = $tgist['running'].$pathStu.basename($file);
                         $zip->addFile($path.$file, $newFile);
@@ -548,29 +507,6 @@ class TgistController extends Controller {
                     }
                 }
                 
-                if(is_dir($path.$tgist['ind_id'])){
-                    $pathInd = "/"."Industrial/";
-                    $file = $Sch->industrial->image_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                    $file = $Sch->scholarTgist->industrial_certificate_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                    $file = $Sch->scholarTgist->industrial_join_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                    $file = $Sch->scholarTgist->industrial_attachment_other_path;
-                    if (is_file($path.$file)) {
-                        $newFile = $tgist['running'].$pathInd.basename($file);
-                        $zip->addFile($path.$file, $newFile);
-                    }
-                }
             }
             
             $zip->save();
@@ -747,46 +683,6 @@ class TgistController extends Controller {
             $document->setValue('pro_men_year_enrolled', ConfigWeb::setWord($data[0]['pro_men_edu_enrolled']));
             $document->setValue('pro_men_year_graduated', ConfigWeb::setWord($data[0]['pro_men_edu_graduated']));
 
-            $document->setValue('ind_name', ConfigWeb::setWord($data[0]['ind_name']));
-            $document->setValue('ind_address', ConfigWeb::setWord($data[0]['ind_address']));
-            $document->setValue('ind_fullname', ConfigWeb::setWord($data[0]['ind_fullname']));
-            $document->setValue('ind_mobile', ConfigWeb::setWord($data[0]['ind_mobile']));
-            $document->setValue('ind_email', ConfigWeb::setWord($data[0]['ind_email']));
-            $document->setValue('xfnc_ind_type_manufacture', ConfigWeb::setCheck($data[0]['ind_type_manufacture']));
-            $document->setValue('xfnc_ind_type_export', ConfigWeb::setCheck($data[0]['ind_type_export']));
-            $document->setValue('xfnc_ind_type_service', ConfigWeb::setCheck($data[0]['ind_type_service']));
-            $document->setValue('ind_type_description', ConfigWeb::setWord($data[0]['ind_type_description']));
-            
-            $document->setValue('ind_incash_salary', ConfigWeb::setCheck($data[0]['ind_incash_salary']));
-            $document->setValue('ind_incash_salary_cost', ConfigWeb::setWord(number_format($data[0]['ind_incash_salary_cost'], 2, '.', ',')));
-            
-            $document->setValue('ind_incash_rents', ConfigWeb::setCheck($data[0]['ind_incash_rents']));
-            $document->setValue('ind_incash_rents_cost', ConfigWeb::setWord(number_format($data[0]['ind_incash_rents_cost'], 2, '.', ',')));
-            
-            $document->setValue('ind_incash_traveling', ConfigWeb::setCheck($data[0]['ind_incash_traveling']));
-            $document->setValue('ind_incash_traveling_cost', ConfigWeb::setWord(number_format($data[0]['ind_incash_traveling_cost'], 2, '.', ',')));
-            
-            $document->setValue('ind_incash_other', ConfigWeb::setCheck($data[0]['ind_incash_other']));
-            $document->setValue('ind_incash_other_cost', ConfigWeb::setWord(number_format($data[0]['ind_incash_other_cost'], 2, '.', ',')));
-            $document->setValue('ind_incash_other_text', ConfigWeb::setWord($data[0]['ind_incash_other_text']));
-            
-            $document->setValue('ind_incash_other2', ConfigWeb::setCheck($data[0]['ind_incash_other2']));
-            $document->setValue('ind_incash_other2_cost', ConfigWeb::setWord(number_format($data[0]['ind_incash_other2_cost'], 2, '.', ',')));
-            $document->setValue('ind_incash_other2_text', ConfigWeb::setWord($data[0]['ind_incash_other2_text']));
-            
-            $document->setValue('ind_inkind_equipment', ConfigWeb::setCheck($data[0]['ind_inkind_equipment']));
-            $document->setValue('ind_inkind_equipment_cost', ConfigWeb::setWord(number_format($data[0]['ind_inkind_equipment_cost'], 2, '.', ',')));
-            
-            $document->setValue('ind_inkind_other', ConfigWeb::setCheck($data[0]['ind_inkind_other']));
-            $document->setValue('ind_inkind_other_text', ConfigWeb::setWord($data[0]['ind_inkind_other_text']));
-            $document->setValue('ind_inkind_other_cost', ConfigWeb::setWord(number_format($data[0]['ind_inkind_other_cost'], 2, '.', ',')));
-            
-            $document->setValue('ind_inkind_other2', ConfigWeb::setCheck($data[0]['ind_inkind_other2']));
-            $document->setValue('ind_inkind_other2_text', ConfigWeb::setWord($data[0]['ind_inkind_other2_text']));
-            $document->setValue('ind_inkind_other2_cost', ConfigWeb::setWord(number_format($data[0]['ind_inkind_other2_cost'], 2, '.', ',')));
-            
-            $document->setValue('ind_support_desc', ConfigWeb::setWord($data[0]['ind_support_desc']));
-
             $document->setValue('prj_name', ConfigWeb::setWord($data[0]['prj_name']));
             $document->setValue('prj_objective', ConfigWeb::setWord($data[0]['prj_objective']));
             $document->setValue('prj_scope', ConfigWeb::setWord($data[0]['prj_scope']));
@@ -908,7 +804,6 @@ class TgistController extends Controller {
 //            
             $document->setValue('professor_comment', ConfigWeb::setWord($data[0]['professor_comment']));
             $document->setValue('mentor_comment', ConfigWeb::setWord($data[0]['mentor_comment']));
-            $document->setValue('industrial_comment', ConfigWeb::setWord($data[0]['industrial_comment']));
 //            
             $document->setValue('xfnc_att_cv', ConfigWeb::setCheck($data[0]['att_cv']));
             $document->setValue('xfnc_att_project', ConfigWeb::setCheck($data[0]['att_project']));
@@ -919,8 +814,6 @@ class TgistController extends Controller {
             $document->setValue('xfnc_att_stu_other', ConfigWeb::setCheck($data[0]['att_stu_other']));
             $document->setValue('xfnc_att_stu_other2', ConfigWeb::setCheck($data[0]['att_stu_other2']));
             $document->setValue('xfnc_att_certificate', ConfigWeb::setCheck($data[0]['att_certificate']));
-            $document->setValue('xfnc_att_industrial_join', ConfigWeb::setCheck($data[0]['att_industrial_join']));
-            $document->setValue('xfnc_att_ind_other', ConfigWeb::setCheck($data[0]['att_ind_other']));
                 
 //            $document->setValue('xxx', ConfigWeb::setWord(''));
 //            $document->setValue('xxx', ConfigWeb::setCheck(NULL));
@@ -981,7 +874,6 @@ class TgistController extends Controller {
             $Student_id_old = NULL;
             $Professor_id_old = NULL;
             $Mentor_id_old = NULL;
-            $Industrial_id_old = NULL;
             $model = new ChangeEmailForm;
             $criteria = new CDbCriteria ();
             $criteria->condition = "id = " . $scholar_id . " and " . strtolower($person_type) . '_id = ' .$person_id;
@@ -997,9 +889,6 @@ class TgistController extends Controller {
                 } else if ($utype == 'mentor') {
                     $model->attributes = $Scholar->mentor->attributes;
                     $Mentor_id_old = $Scholar->mentor->id;
-                } else if ($utype == 'industrial') {
-                    $model->attributes = $Scholar->industrial->attributes;
-                    $Industrial_id_old = $Scholar->industrial->id;
                 } else {
                     throw new CHttpException(404, 'The requested page does not exist.');
                 }
@@ -1349,119 +1238,6 @@ class TgistController extends Controller {
                                 }
                             }
                         }
-                    }
-                    // ============ Industrial ============
-                    else if ($utype == 'industrial' && $model->email != $Scholar->industrial->email) {       
-                        if ($model->validate()) {
-                            $criteria->condition = "email = '" . $model->email . "'";
-                            $criteria->limit = 1;
-                            $PersonNewEmail = Person::model()->find($criteria);
-                            if(empty($PersonNewEmail)){
-//                                $model->id = NULL;
-                                $model->type = 'industrial';
-                                $model->first_created = date("Y-m-d H:i:s");
-                                $model->last_updated = date("Y-m-d H:i:s");
-                                // ----------------- GEN TOKEN ------------------------
-                                $getTokenRand = rand(0, 99999);
-                                $getTime = date("H:i:s");
-                                $email = $model->email;
-                                $model->token = RegisterForm::hashPassword($getTokenRand . $getTime . $email);
-                                $model->setIsNewRecord(TRUE);
-                                if ($model->save()) {
-                                    if (!@mkdir(Yii::app()->basePath . Yii::app()->params ['pathUploads'] . $model->id, 0, true)) {}
-                                    $Scholar->industrial_id = $model->id;
-                                    $Scholar->setIsNewRecord(FALSE);
-                                    if($Scholar->update()){
-                                        $criteria->condition = "person_id = " . $Industrial_id_old . " and scholar_id = " . $scholar_id;
-                                        $criteria->limit = 1;
-                                        $Comment = Comment::model()->find($criteria);
-                                        $Comment->person_id = $model->id;
-                                        $Comment->status = 'draft';
-    //                                    $Comment->comment = '';
-                                        $Comment->first_created = $Comment->first_created;
-                                        $Comment->last_updated = date("Y-m-d H:i:s");
-                                        $Comment->setIsNewRecord(FALSE);
-                                        if($Comment->update()){
-                                            //=======================================================================
-                                            $SendMail = new SendMail ();
-                                            $scholar_type = strtoupper($scholar_type);
-                                            $subject = Yii::app()->params ['EmailTemplateChangeEmailSubject'];
-                                            $subject = str_replace("##SCHOLARTYPE##", $scholar_type, $subject);
-                                            $subject = str_replace("##TYPE##", "บริษัท/ภาคอุตสาหกรรม", $subject);
-                                            $SendMail->subject = $subject;
-                                            $message = Yii::app()->params ['EmailTemplateChangeEmailBody'];
-                                            $message = str_replace("##TELLADMIN##", Yii::app()->params ['adminStemTell'], $message);
-                                            $PERSONNAME = $model->fname . "  " . $model->lname;
-                                            $message = str_replace("##PERSONNAME##", $PERSONNAME, $message);
-                                            $message = str_replace("##SCHOLARTYPE##", $scholar_type, $message);
-                                            $verifyUrl = Yii::app()->createUrl('site/verifytoken', array(
-                                                'token' => $model->token,
-                                                'scholartype' => ConfigWeb::getActiveScholarType()
-                                            ));
-                                            $URL = 'http://' . Yii::app()->params ['serverDomain'] . $verifyUrl;
-                                            $message = str_replace("##URL##", $URL, $message);
-                                            $SendMail->body = $message;
-                                            $SendMail->to = $model->email;
-                                            $SendMail->from = "noreply@nstda.or.th";
-                                            $SendMail->send();
-                                            //=======================================================================
-
-                                            Yii::app()->user->setFlash('success', "ส่ง Email เรียบร้อยแล้ว / Email Success!!");
-                                            $this->redirect(Yii::app()->createUrl(WorkflowData::$home));
-                                        }
-                                    }
-                                }else{
-                                    Yii::app()->user->setFlash('error', "ไม่สามารถเปลี่ยน Email ได้ / Change Email error!!");
-                                    $this->redirect(Yii::app()->createUrl(WorkflowData::$home));
-                                }
-                            }else{
-                                $Industrial_id_old = $Scholar->industrial->id;
-                                $Scholar->industrial_id = $PersonNewEmail->id;
-                                $Scholar->setIsNewRecord(FALSE);
-                                
-                                if($Scholar->update()){
-                                    $criteria->condition = "person_id = " . $Industrial_id_old . " and scholar_id = " . $scholar_id;
-                                    $criteria->limit = 1;
-                                    $Comment = Comment::model()->find($criteria);
-                                    $Comment->person_id = $PersonNewEmail->id;
-                                    $Comment->status = 'draft';
-                                    $Comment->first_created = $Comment->first_created;
-                                    $Comment->last_updated = date("Y-m-d H:i:s");
-                                    $Comment->setIsNewRecord(FALSE);
-                                    if($Comment->update()){
-                                        //=======================================================================
-                                        $SendMail = new SendMail ();
-                                        $scholar_type = strtoupper($scholar_type);
-                                        $subject = Yii::app()->params ['EmailTemplateChangeEmailSubject'];
-                                        $subject = str_replace("##SCHOLARTYPE##", $scholar_type, $subject);
-                                        $subject = str_replace("##TYPE##", "บริษัท/ภาคอุตสาหกรรม", $subject);
-                                        $SendMail->subject = $subject;
-                                        $message = Yii::app()->params ['EmailTemplateChangeEmailBody'];
-                                        $message = str_replace("##TELLADMIN##", Yii::app()->params ['adminStemTell'], $message);
-                                        $PERSONNAME = $Scholar->industrial->fname . "  " . $Scholar->industrial->lname;
-                                        $message = str_replace("##PERSONNAME##", $PERSONNAME, $message);
-                                        $message = str_replace("##SCHOLARTYPE##", $scholar_type, $message);
-                                        $verifyUrl = Yii::app()->createUrl('site/verifytoken', array(
-                                            'token' => $Scholar->industrial->token,
-                                            'scholartype' => ConfigWeb::getActiveScholarType()
-                                        ));
-                                        $URL = 'http://' . Yii::app()->params ['serverDomain'] . $verifyUrl;
-                                        $message = str_replace("##URL##", $URL, $message);
-                                        $SendMail->body = $message;
-                                        $SendMail->to = $Scholar->industrial->email;
-                                        $SendMail->from = "noreply@nstda.or.th";
-                                        $SendMail->send();
-                                        //=======================================================================
-
-                                        Yii::app()->user->setFlash('success', "ส่ง Email เรียบร้อยแล้ว / Email Success!!");
-                                        $this->redirect(Yii::app()->createUrl(WorkflowData::$home));
-                                    }else{
-                                        Yii::app()->user->setFlash('error', "ไม่สามารถเปลี่ยน Email ได้ / Change Email error!!");
-                                        $this->redirect(Yii::app()->createUrl(WorkflowData::$home));
-                                    }
-                                }
-                            }
-                        }
                     }else{
                         Yii::app()->user->setFlash('success', "เปลี่ยน Email เรียบร้อยแล้ว / Email Success!!");
                         $this->redirect(Yii::app()->createUrl(WorkflowData::$home));
@@ -1578,36 +1354,6 @@ class TgistController extends Controller {
                 $SendMail->to = $Scholar->mentor->email;
                 $SendMail->from = "noreply@nstda.or.th";
                 $SendMail->send();
-            } else if ($utype == 'industrial') {
-                // ระบบส่งเมล์แจ้ง บริษัท/ภาคอุตสาหกรรม *************************
-                $criteria = new CDbCriteria ();
-                $criteria->condition = "id = " . $scholar_id;
-                $criteria->limit = 1;
-                $Scholar = Scholar::model()->find($criteria);
-
-                $SendMail = new SendMail ();
-                $scholar_type = strtoupper(ConfigWeb::getActiveScholarType());
-                $subject = Yii::app()->params ['EmailTemplateRecommendationSubject'];
-                $subject = str_replace("##SCHOLARTYPE##", $scholar_type, $subject);
-                $subject = str_replace("##TYPE##", "บริษัท/ภาคอุตสาหกรรม", $subject);
-                $SendMail->subject = $subject;
-                $message = Yii::app()->params ['EmailTemplateRecommendationBody'];
-                $message = str_replace("##TYPE##", "บริษัท/ภาคอุตสาหกรรม", $message);
-                $message = str_replace("##EMAILADMINSTEM##", Yii::app()->params ['adminStemEmail'], $message);
-                $message = str_replace("##TELLADMIN##", Yii::app()->params ['adminStemTell'], $message);
-                $PERSONNAME = $Scholar->industrial->fname . "  " . $Scholar->industrial->lname;
-                $message = str_replace("##PERSONNAME##", $PERSONNAME, $message);
-                $message = str_replace("##SCHOLARTYPE##", $scholar_type, $message);
-                $verifyUrl = Yii::app()->createUrl('site/verifytoken', array(
-                    'token' => $Scholar->industrial->token,
-                    'scholartype' => ConfigWeb::getActiveScholarType()
-                ));
-                $URL = 'http://' . Yii::app()->params ['serverDomain'] . $verifyUrl;
-                $message = str_replace("##URL##", $URL, $message);
-                $SendMail->body = $message;
-                $SendMail->to = $Scholar->industrial->email;
-                $SendMail->from = "noreply@nstda.or.th";
-                $SendMail->send();
             } else {
                 throw new CHttpException(404, 'The requested page does not exist.');
             }
@@ -1626,8 +1372,6 @@ class TgistController extends Controller {
                 CONCAT(s.fname,'  ',s.lname) AS student_name,
                 CONCAT(p.fname,'  ',p.lname) AS professor_name,
                 CONCAT(m.fname,'  ',m.lname) AS mentor_name,
-                CONCAT(i.fname,'  ',i.lname) AS industrial_name,
-                    i.industrial AS industrial_full,
                     project.name AS project_name,
                     project.objective AS project_objective,
                     project.scope AS project_scope,
@@ -1644,7 +1388,6 @@ class TgistController extends Controller {
                 LEFT JOIN person s ON scholar.student_id = s.id 
                 LEFT JOIN person p ON scholar.professor_id = p.id 
                 LEFT JOIN person m ON scholar.mentor_id = m.id 
-                LEFT JOIN person i ON scholar.industrial_id = i.id 
                 WHERE scholar.id=" . ConfigWeb::getActiveScholarId();
         $RecommendationDisplay = Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($RecommendationDisplay [0] as $key => $value) {
@@ -1656,28 +1399,6 @@ class TgistController extends Controller {
                 $criteria->condition = "id = " . $scholar_tgist_id;
                 $criteria->limit = 1;
                 $ScholarTgist = ScholarTgist::model()->find($criteria);
-                // $model->industrial_support = $ScholarTgist->industrial_support;
-                $model->industrial_incash_salary = $ScholarTgist->industrial_incash_salary;
-                $model->industrial_incash_salary_cost = $ScholarTgist->industrial_incash_salary_cost;
-                $model->industrial_incash_rents = $ScholarTgist->industrial_incash_rents;
-                $model->industrial_incash_rents_cost = $ScholarTgist->industrial_incash_rents_cost;
-                $model->industrial_incash_traveling = $ScholarTgist->industrial_incash_traveling;
-                $model->industrial_incash_traveling_cost = $ScholarTgist->industrial_incash_traveling_cost;
-                $model->industrial_incash_other = $ScholarTgist->industrial_incash_other;
-                $model->industrial_incash_other_cost = $ScholarTgist->industrial_incash_other_cost;
-                $model->industrial_incash_other_text = $ScholarTgist->industrial_incash_other_text;
-                $model->industrial_incash_other2 = $ScholarTgist->industrial_incash_other2;
-                $model->industrial_incash_other2_cost = $ScholarTgist->industrial_incash_other2_cost;
-                $model->industrial_incash_other2_text = $ScholarTgist->industrial_incash_other2_text;
-                $model->industrial_inkind_equipment = $ScholarTgist->industrial_inkind_equipment;
-                $model->industrial_inkind_equipment_cost = $ScholarTgist->industrial_inkind_equipment_cost;
-                $model->industrial_inkind_other = $ScholarTgist->industrial_inkind_other;
-                $model->industrial_inkind_other_cost = $ScholarTgist->industrial_inkind_other_cost;
-                $model->industrial_inkind_other_text = $ScholarTgist->industrial_inkind_other_text;
-                $model->industrial_inkind_other2 = $ScholarTgist->industrial_inkind_other2;
-                $model->industrial_inkind_other2_cost = $ScholarTgist->industrial_inkind_other2_cost;
-                $model->industrial_inkind_other2_text = $ScholarTgist->industrial_inkind_other2_text;
-//                $model->industrial_support_desc = $ScholarTgist->industrial_support_desc;
                 $criteria->condition = "" . "scholar_id = " . ConfigWeb::getActiveScholarId() . " and person_id = " . $person_id;
                 $criteria->limit = 1;
                 $Comment = Comment::model()->find($criteria);
@@ -1693,61 +1414,9 @@ class TgistController extends Controller {
             if (isset($_POST ['TgistRecommendationForm'])) {
                 $model->attributes = Yii::app()->input->post('TgistRecommendationForm');
 
-                if (empty($model->industrial_incash_salary)) {
-                    $model->industrial_incash_salary_cost = 0;
-                }
-                if (empty($model->industrial_incash_rents)) {
-                    $model->industrial_incash_rents_cost = 0;
-                }
-                if (empty($model->industrial_incash_traveling)) {
-                    $model->industrial_incash_traveling_cost = 0;
-                }
-                if (empty($model->industrial_incash_other)) {
-                    $model->industrial_incash_other_cost = 0;
-                    $model->industrial_incash_other_text = NULL;
-                }
-                if (empty($model->industrial_incash_other2)) {
-                    $model->industrial_incash_other2_cost = 0;
-                    $model->industrial_incash_other2_text = NULL;
-                }
-                if (empty($model->industrial_inkind_equipment)) {
-                    $model->industrial_inkind_equipment_cost = 0;
-                }
-                if (empty($model->industrial_inkind_other)) {
-                    $model->industrial_inkind_other_cost = 0;
-                    $model->industrial_inkind_other_text = NULL;
-                }
-                if (empty($model->industrial_inkind_other2)) {
-                    $model->industrial_inkind_other2_cost = 0;
-                    $model->industrial_inkind_other2_text = NULL;
-                }
                 if (isset($_POST ['draft']) || isset($_POST ['savesend']) || isset($_POST ['save'])) {
 
                     if ($model->validate()) {
-                        // $ScholarTgist->industrial_support = $model->industrial_support;
-                        // $ScholarTgist->first_created = $ScholarTgist->first_created;
-                        // $ScholarTgist->last_updated = date("Y-m-d H:i:s");
-                        $ScholarTgist->industrial_incash_salary = $model->industrial_incash_salary;
-                        $ScholarTgist->industrial_incash_salary_cost = $model->industrial_incash_salary_cost;
-                        $ScholarTgist->industrial_incash_rents = $model->industrial_incash_rents;
-                        $ScholarTgist->industrial_incash_rents_cost = $model->industrial_incash_rents_cost;
-                        $ScholarTgist->industrial_incash_traveling = $model->industrial_incash_traveling;
-                        $ScholarTgist->industrial_incash_traveling_cost = $model->industrial_incash_traveling_cost;
-                        $ScholarTgist->industrial_incash_other = $model->industrial_incash_other;
-                        $ScholarTgist->industrial_incash_other_cost = $model->industrial_incash_other_cost;
-                        $ScholarTgist->industrial_incash_other_text = $model->industrial_incash_other_text;
-                        $ScholarTgist->industrial_incash_other2 = $model->industrial_incash_other2;
-                        $ScholarTgist->industrial_incash_other2_cost = $model->industrial_incash_other2_cost;
-                        $ScholarTgist->industrial_incash_other2_text = $model->industrial_incash_other2_text;
-                        $ScholarTgist->industrial_inkind_equipment = $model->industrial_inkind_equipment;
-                        $ScholarTgist->industrial_inkind_equipment_cost = $model->industrial_inkind_equipment_cost;
-                        $ScholarTgist->industrial_inkind_other = $model->industrial_inkind_other;
-                        $ScholarTgist->industrial_inkind_other_cost = $model->industrial_inkind_other_cost;
-                        $ScholarTgist->industrial_inkind_other_text = $model->industrial_inkind_other_text;
-                        $ScholarTgist->industrial_inkind_other2 = $model->industrial_inkind_other2;
-                        $ScholarTgist->industrial_inkind_other2_cost = $model->industrial_inkind_other2_cost;
-                        $ScholarTgist->industrial_inkind_other2_text = $model->industrial_inkind_other2_text;
-                        $ScholarTgist->industrial_support_desc = $model->industrial_support_desc;
                         $ScholarTgist->setIsNewRecord(FALSE);
                         if ($ScholarTgist->update()) {
                             if (isset($_POST ['draft'])) {
@@ -1800,10 +1469,6 @@ class TgistController extends Controller {
             if (!empty($model->project_student_end))
                 $model->project_student_end = date("d/m/Y", strtotime($model->project_student_end));
         }
-
-        $model->incash_sum = $model->industrial_incash_salary_cost + $model->industrial_incash_rents_cost + $model->industrial_incash_traveling_cost + $model->industrial_incash_other_cost + $model->industrial_incash_other2_cost;
-        $model->inkind_sum = $model->industrial_inkind_equipment_cost + $model->industrial_inkind_other_cost + $model->industrial_inkind_other2_cost;
-        $model->sum = $model->incash_sum + $model->inkind_sum;
 
         $this->render('recommendation', array(
             'model' => $model
@@ -2004,103 +1669,7 @@ class TgistController extends Controller {
             'model' => $model
         ));
     }
-    
-    public function actionIndustrial() {
-        $Scholar = NULL;
-        $Industrial = NULL;
-        $model = new TgistStudentForm ();
 
-        $criteria = new CDbCriteria ();
-        $criteria->condition = "id = " . ConfigWeb::getActiveScholarId();
-        $criteria->limit = 1;
-        $Scholar = Scholar::model()->find($criteria);
-
-        if (!empty($Scholar->industrial_id)) {
-            $criteria->condition = "id = " . $Scholar->industrial_id;
-            $criteria->limit = 1;
-            $Industrial = Person::model()->find($criteria);
-            $model->attributes = $Industrial->attributes;
-            $model->industrial_id = $Scholar->industrial_id;
-            $model->status = $Scholar->status;
-        }
-
-	if (Yii::app()->request->isPostRequest) {
-            if (isset($_POST ['TgistStudentForm'])) {
-                $model->attributes = Yii::app()->input->post('TgistStudentForm');
-                
-                $criteria->condition = "email = '" . $model->email . "'";
-                $criteria->limit = 1;
-                $Industrial = Person::model()->find($criteria);
-                
-                if (isset($_POST ['next'])) {
-                    if ($model->validate()) {
-                        if (!empty($Industrial)) {
-                            $model->first_created = $Industrial->first_created;
-                            $model->last_updated = date("Y-m-d H:i:s");
-                            $model->setIsNewRecord(FALSE);
-                            if ($model->update()) {
-                                $criteria->condition = "email = '" . $model->email . "' and type = 'industrial' ";
-                                $criteria->limit = 1;
-                                $Industrial = Person::model()->find($criteria);
-
-                                $criteria->condition = "id = " . ConfigWeb::getActiveScholarId();
-                                $criteria->limit = 1;
-                                $Scholar = Scholar::model()->find($criteria);
-                                $Scholar->industrial_id = $Industrial->id;
-                                $Scholar->last_updated = date("Y-m-d H:i:s");
-                                $Scholar->setIsNewRecord(FALSE);
-                                if ($Scholar->update()) {
-                                    $UrlNext = WorkflowData::WorkflowUrlNext(Yii::app()->urlManager->parseUrl(Yii::app()->request), TRUE);
-                                    $this->redirect(Yii::app()->createUrl($UrlNext));
-                                }
-                            }
-                        } else {
-                            $model->id = NULL;
-                            $model->type = 'industrial';
-                            $model->first_created = date("Y-m-d H:i:s");
-                            $model->last_updated = date("Y-m-d H:i:s");
-                            // ----------------- GEN TOKEN ------------------------
-                            $getTokenRand = rand(0, 99999);
-                            $getTime = date("H:i:s");
-                            $email = $model->email;
-                            $model->token = RegisterForm::hashPassword($getTokenRand . $getTime . $email);
-                            $model->setIsNewRecord(TRUE);
-                            if ($model->save()) {
-                                if (!@mkdir(Yii::app()->basePath . Yii::app()->params ['pathUploads'] . $model->id, 0, true)) {
-                                    
-                                }
-                                $criteria->condition = "id = " . ConfigWeb::getActiveScholarId();
-                                $criteria->limit = 1;
-                                $Scholar = Scholar::model()->find($criteria);
-                                $Scholar->industrial_id = $model->id;
-                                $Scholar->last_updated = date("Y-m-d H:i:s");
-                                $Scholar->setIsNewRecord(FALSE);
-                                if ($Scholar->update()) {
-                                    $criteria->condition = "email = '" . $model->email . "' and type = 'industrial' ";
-                                    $criteria->limit = 1;
-                                    $Industrial = Person::model()->find($criteria);
-
-                                    $criteria->condition = "id = " . ConfigWeb::getActiveScholarId();
-                                    $criteria->limit = 1;
-                                    $Scholar = Scholar::model()->find($criteria);
-                                    $Scholar->industrial_id = $Industrial->id;
-                                    $Scholar->last_updated = date("Y-m-d H:i:s");
-                                    $Scholar->setIsNewRecord(FALSE);
-                                    if ($Scholar->update()) {
-                                        $UrlNext = WorkflowData::WorkflowUrlNext(Yii::app()->urlManager->parseUrl(Yii::app()->request), TRUE);
-                                        $this->redirect(Yii::app()->createUrl($UrlNext));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        $this->render('industrial', array(
-            'model' => $model
-        ));
-    }
     
     public function actionVerifyStudent() {
         $ScholarTgist = NULL;
@@ -2849,8 +2418,7 @@ class TgistController extends Controller {
                                             FROM comment
                                             where scholar_id=" . ConfigWeb::getActiveScholarId()
                                             . " and person_id=" . $Scholar->professor_id
-                                            . " or person_id=" . $Scholar->mentor_id
-                                            . " or person_id=" . $Scholar->industrial_id;
+                                            . " or person_id=" . $Scholar->mentor_id;
                                     $ReCheckConfirm = Yii::app()->db->createCommand($sql)->queryAll(); 
 
                                     if ($ReCheckConfirm [0] ['total'] == $ReCheckConfirm [0] ['sent']) {
@@ -3065,7 +2633,7 @@ class TgistController extends Controller {
         $model->id = $Scholar->scholarTgist->id;
         
         if($person_type == 'student'){
-            $model->industrial_certificate_path = $Scholar->scholarTgist->industrial_certificate_path;
+            $model->student_proposal_path = $Scholar->scholarTgist->student_proposal_path;
             $model->student_transcript_path = $Scholar->scholarTgist->student_transcript_path;
             $model->student_portfolio_path = $Scholar->scholarTgist->student_portfolio_path;
             $model->student_attachment_other_path = $Scholar->scholarTgist->student_attachment_other_path;
@@ -3076,17 +2644,11 @@ class TgistController extends Controller {
             $model->professor_attachment_other_path = $Scholar->scholarTgist->professor_attachment_other_path;
             $model->professor_attachment_other2_path = $Scholar->scholarTgist->professor_attachment_other2_path;
             $model->professor_attachment_other3_path = $Scholar->scholarTgist->professor_attachment_other3_path;
-//                $model->professor_proposal_path = $Scholar->scholarTgist->professor_proposal_path;
         }else if($person_type == 'mentor'){
             $model->cv_path = $user->cv_path;
             $model->mentor_attachment_other_path = $Scholar->scholarTgist->mentor_attachment_other_path;
             $model->mentor_attachment_other2_path = $Scholar->scholarTgist->mentor_attachment_other2_path;
             $model->mentor_attachment_other3_path = $Scholar->scholarTgist->mentor_attachment_other3_path;
-        }else if($person_type == 'industrial'){
-            $model->cv_path = $user->cv_path;
-            $model->industrial_attachment_other_path = $Scholar->scholarTgist->industrial_attachment_other_path;
-            $model->industrial_attachment_other2_path = $Scholar->scholarTgist->industrial_attachment_other2_path;
-            $model->industrial_attachment_other3_path = $Scholar->scholarTgist->industrial_attachment_other3_path;
         }
         
         $criteria->condition = ""
@@ -3102,6 +2664,20 @@ class TgistController extends Controller {
                 $model->attributes = Yii::app()->input->post('TgistUploadAttachmentForm');
                 if (isset($_POST['upload'])) {
                     if($person_type == 'student'){
+                        $FileUpload = CUploadedFile::getInstance($model, 'student_proposal');
+                        if (!empty($FileUpload)) {
+                            $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
+                            $fileName = $user->id . '\\' .ConfigWeb::getActiveScholarId()."_student_proposal.$ext";
+                            $Scholar->scholarTgist->id = $Scholar->scholarTgist->id;
+                            $Scholar->scholarTgist->student_proposal_path = $fileName;
+                            $model->student_proposal_path = $fileName;
+                            $Scholar->scholarTgist->setIsNewRecord(FALSE);
+                            if($model->validate('student_proposal')){
+                                if ($Scholar->scholarTgist->update()) {
+                                    $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads'] . $fileName);
+                                }
+                            }
+                        }
                         $FileUpload = CUploadedFile::getInstance($model, 'student_transcript');
                         if (!empty($FileUpload)) {
                             $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
@@ -3127,20 +2703,6 @@ class TgistController extends Controller {
                             if($model->validate('student_portfolio')){
                                 if ($Scholar->scholarTgist->update()) {
                                     $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads']  . $fileName);
-                                }
-                            }
-                        }
-                        $FileUpload = CUploadedFile::getInstance($model, 'industrial_certificate');
-                        if (!empty($FileUpload)) {
-                            $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
-                            $fileName = $user->id . '\\' .ConfigWeb::getActiveScholarId()."_industrial_certificate.$ext";
-                            $Scholar->scholarTgist->id = $Scholar->scholarTgist->id;
-                            $Scholar->scholarTgist->industrial_certificate_path = $fileName;
-                            $model->industrial_certificate_path = $fileName;
-                            $Scholar->scholarTgist->setIsNewRecord(FALSE);
-                            if($model->validate('industrial_certificate')){
-                                if ($Scholar->scholarTgist->update()) {
-                                    $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads'] . $fileName);
                                 }
                             }
                         }
@@ -3305,65 +2867,6 @@ class TgistController extends Controller {
                             }
                         }
                     }
-                    else if($person_type == 'industrial'){
-                        $FileUpload = CUploadedFile::getInstance($model, 'cv');
-                        if (!empty($FileUpload)) {
-                            $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
-                            $fileName = $user->id . '\\' . "cv.$ext";
-                            $user->cv_path =  $fileName;
-                            $model->cv_path =  $fileName;
-                            $user->first_created = $user->first_created;
-                            $user->last_updated = date("Y-m-d H:i:s");
-                            $user->setIsNewRecord(FALSE);
-                            if($model->validate('cv')){
-                                if ($user->update()) {
-                                    $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads'] . $fileName);
-                                }
-                            }
-                        }
-                        $FileUpload = CUploadedFile::getInstance($model, 'industrial_attachment_other');
-                        if (!empty($FileUpload)) {
-                            $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
-                            $fileName = $user->id . '\\' .ConfigWeb::getActiveScholarId()."_industrial_attachment_other.$ext";
-                            $Scholar->scholarTgist->id = $Scholar->scholarTgist->id;
-                            $Scholar->scholarTgist->industrial_attachment_other_path = $fileName;
-                            $model->industrial_attachment_other_path = $fileName;
-                            $Scholar->scholarTgist->setIsNewRecord(FALSE);
-                            if($model->validate('industrial_attachment_other')){
-                                if ($Scholar->scholarTgist->update()) {
-                                    $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads']  . $fileName);
-                                }
-                            }
-                        }
-                        $FileUpload = CUploadedFile::getInstance($model, 'industrial_attachment_other2');
-                        if (!empty($FileUpload)) {
-                            $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
-                            $fileName = $user->id . '\\' .ConfigWeb::getActiveScholarId()."_industrial_attachment_other2.$ext";
-                            $Scholar->scholarTgist->id = $Scholar->scholarTgist->id;
-                            $Scholar->scholarTgist->industrial_attachment_other2_path = $fileName;
-                            $model->industrial_attachment_other2_path = $fileName;
-                            $Scholar->scholarTgist->setIsNewRecord(FALSE);
-                            if($model->validate('industrial_attachment_other2')){
-                                if ($Scholar->scholarTgist->update()) {
-                                    $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads']  . $fileName);
-                                }
-                            }
-                        }
-                        $FileUpload = CUploadedFile::getInstance($model, 'industrial_attachment_other3');
-                        if (!empty($FileUpload)) {
-                            $ext = pathinfo($FileUpload, PATHINFO_EXTENSION);
-                            $fileName = $user->id . '\\' .ConfigWeb::getActiveScholarId()."_industrial_attachment_other3.$ext";
-                            $Scholar->scholarTgist->id = $Scholar->scholarTgist->id;
-                            $Scholar->scholarTgist->industrial_attachment_other3_path = $fileName;
-                            $model->industrial_attachment_other3_path = $fileName;
-                            $Scholar->scholarTgist->setIsNewRecord(FALSE);
-                            if($model->validate('industrial_attachment_other3')){
-                                if ($Scholar->scholarTgist->update()) {
-                                    $FileUpload->saveAs(Yii::app()->basePath . Yii::app()->params['pathUploads']  . $fileName);
-                                }
-                            }
-                        }
-                    }
                     if(!empty($errores)){
                         foreach ($errores as $key=>$value) {
                             Yii::app()->user->setFlash('error_'.$key, $model->attributeLabels()[$key] ." - ". $value[0]);
@@ -3390,24 +2893,18 @@ class TgistController extends Controller {
                             Yii::app()->user->setFlash('error1', $model->attributeLabels()['cv_path'] . ' - กรุณาอัพโหลด / Please upload file');
                         }
                     }
-                    else if ($person_type == 'industrial') {
-                        if (empty($user->cv_path)){
-                            $error = 'error';
-                            Yii::app()->user->setFlash('error1', $model->attributeLabels()['cv_path'] . ' - กรุณาอัพโหลด / Please upload file');
-                        }
-                    }
                     else if ($person_type == 'student') {
 //                        if (empty($user->copy_id_card_path)) {
 //                            $error = 'error';
 //                            Yii::app()->user->setFlash('error3', $model->attributeLabels()['copy_id_card_path'] . ' - กรุณาอัพโหลด / Please upload file');
 //                        }
+                        if (empty($Scholar->scholarTgist->student_proposal_path)) {
+                            $error = 'error';
+                            Yii::app()->user->setFlash('error2', $model->attributeLabels()['student_proposal_path'] . ' - กรุณาอัพโหลด / Please upload file');
+                        }
                         if (empty($Scholar->scholarTgist->student_transcript_path)) {
                             $error = 'error';
                             Yii::app()->user->setFlash('error2', $model->attributeLabels()['student_transcript_path'] . ' - กรุณาอัพโหลด / Please upload file');
-                        }
-                        if (empty($Scholar->scholarTgist->industrial_certificate_path)){
-                            $error = 'error';
-                            Yii::app()->user->setFlash('error2', $model->attributeLabels()['industrial_certificate_path'] . ' - กรุณาอัพโหลด / Please upload file');
                         }
                     }
                     
@@ -3502,44 +2999,6 @@ class TgistController extends Controller {
                                 $SendMail->from = "noreply@nstda.or.th";
                                 $SendMail->send();
                             }
-
-                            $criteria->condition = "scholar_id = " . ConfigWeb::getActiveScholarId() . " and person_id = " . $Scholar->industrial_id;
-                            $criteria->limit = 1;
-                            $ScholarIndustrial = Comment::model()->find($criteria);
-                            if (empty($ScholarIndustrial)) {
-                                $commentForIndustrial = new Comment ();
-                                $commentForIndustrial->scholar_id = ConfigWeb::getActiveScholarId();
-                                $commentForIndustrial->person_id = $Scholar->industrial_id;
-                                $commentForIndustrial->status = 'draft';
-                                $commentForIndustrial->first_created = date("Y-m-d H:i:s");
-                                $commentForIndustrial->last_updated = date("Y-m-d H:i:s");
-                                $commentForIndustrial->save();
-                                $emailIndustrial = $commentForIndustrial->person->email;
-                                // ระบบส่งเมล์แจ้ง บริษัท/ภาคอุตสาหกรรม ด้วย *************************
-                                $SendMail = new SendMail ();
-                                $scholar_type = strtoupper(ConfigWeb::getActiveScholarType());
-                                $subject = Yii::app()->params ['EmailTemplateAlertConfirmSubject'];
-                                $subject = str_replace("##SCHOLARTYPE##", $scholar_type, $subject);
-                                $subject = str_replace("##TYPE##", "บริษัท/ภาคอุตสาหกรรม", $subject);
-                                $SendMail->subject = $subject;
-                                $message = Yii::app()->params ['EmailTemplateAlertConfirmBody'];
-                                $message = str_replace("##TYPE##", "บริษัท/ภาคอุตสาหกรรม", $message);
-                                $message = str_replace("##EMAILADMINSTEM##", Yii::app()->params ['adminStemEmail'], $message);
-                                $message = str_replace("##TELLADMIN##", Yii::app()->params ['adminStemTell'], $message);
-                                $PERSONNAME = $Scholar->industrial->fname . "  " . $Scholar->industrial->lname;
-                                $message = str_replace("##PERSONNAME##", $PERSONNAME, $message);
-                                $message = str_replace("##SCHOLARTYPE##", $scholar_type, $message);
-                                $verifyUrl = Yii::app()->createUrl('site/verifytoken', array(
-                                    'token' => $Scholar->industrial->token,
-                                    'scholartype' => ConfigWeb::getActiveScholarType()
-                                ));
-                                $URL = 'http://' . Yii::app()->params ['serverDomain'] . $verifyUrl;
-                                $message = str_replace("##URL##", $URL, $message);
-                                $SendMail->body = $message;
-                                $SendMail->to = $Scholar->industrial->email;
-                                $SendMail->from = "noreply@nstda.or.th";
-                                $SendMail->send();
-                            }
                         } else {
                             $error = 'error';
                             Yii::app()->user->setFlash('error','คุณยังไม่ได้ทำรายการครบทุกขั้นตอน');
@@ -3612,7 +3071,7 @@ class TgistController extends Controller {
 
             $model->attributes = $Scholar->scholarTgist->attributes;
             if($person_type == 'student'){
-                $model->industrial_certificate_path = $Scholar->scholarTgist->industrial_certificate_path;
+                $model->student_proposal_path = $Scholar->scholarTgist->student_proposal_path;
                 $model->student_transcript_path = $Scholar->scholarTgist->student_transcript_path;
                 $model->student_portfolio_path = $Scholar->scholarTgist->student_portfolio_path;
                 $model->student_attachment_other_path = $Scholar->scholarTgist->student_attachment_other_path;
@@ -3623,17 +3082,11 @@ class TgistController extends Controller {
                 $model->professor_attachment_other_path = $Scholar->scholarTgist->professor_attachment_other_path;
                 $model->professor_attachment_other2_path = $Scholar->scholarTgist->professor_attachment_other2_path;
                 $model->professor_attachment_other3_path = $Scholar->scholarTgist->professor_attachment_other3_path;
-//                $model->professor_proposal_path = $Scholar->scholarTgist->professor_proposal_path;
             }else if($person_type == 'mentor'){
                 $model->cv_path = $user->cv_path;
                 $model->mentor_attachment_other_path = $Scholar->scholarTgist->mentor_attachment_other_path;
                 $model->mentor_attachment_other2_path = $Scholar->scholarTgist->mentor_attachment_other2_path;
                 $model->mentor_attachment_other3_path = $Scholar->scholarTgist->mentor_attachment_other3_path;
-            }else if($person_type == 'industrial'){
-                $model->cv_path = $user->cv_path;
-                $model->industrial_attachment_other_path = $Scholar->scholarTgist->industrial_attachment_other_path;
-                $model->industrial_attachment_other2_path = $Scholar->scholarTgist->industrial_attachment_other2_path;
-                $model->industrial_attachment_other3_path = $Scholar->scholarTgist->industrial_attachment_other3_path;
             }
             
             $criteria->condition = ""

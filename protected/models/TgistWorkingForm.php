@@ -47,7 +47,8 @@ class TgistWorkingForm extends CActiveRecord {
     
     public function reqNumberAndSharp($attribute, $params) {
         if (strlen($this->$attribute) > 0) {
-            $num = str_replace("#", "", $this->$attribute);
+            $phone_allow = array("#", "-", " ", "ต่อ");
+            $num = str_replace($phone_allow, "", $this->$attribute);
             if (!is_numeric($num) && !empty($num) || strlen($num) < 1) {
                 $this->addError($attribute, $this->attributeLabels()[$attribute] . ' ไม่ถูกต้อง');
             }
@@ -69,7 +70,7 @@ class TgistWorkingForm extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'is_work' => 'สถานภาพการทำงานปัจจุบัน <span class="required">*</span>',
-            'work_company' => 'ชื่อบริษัท/ภาคอุตสาหกรรม/หน่วยงาน / Company <span class="required">*</span>',
+            'work_company' => 'ชื่อหน่วยงาน / Company <span class="required">*</span>',
             'work_position' => 'ตำแหน่ง / Position <span class="required">*</span>',
             'work_location' => 'ที่ตั้งบริษัท/ภาคอุตสาหกรรม / Location <span class="required">*</span>',
             'work_phone' => 'โทรศัพท์ / Phone',

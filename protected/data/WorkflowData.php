@@ -449,7 +449,7 @@ class WorkflowData {
                     $Comment->update();
                 }
             }
-        } else if(($scholar_type == 'nuirc' || $scholar_type == 'tgist') && $person_type == 'mentor'){
+        } else if(($scholar_type == 'nuirc' || $scholar_type == 'tgist') && $person_type != 'student'){
             $criteria->condition = "scholar_id = " . $scholar_id
                     . " and person_id = " . $person_id;
             $criteria->limit = 1;

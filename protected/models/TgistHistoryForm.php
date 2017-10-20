@@ -18,7 +18,7 @@ class TgistHistoryForm extends CActiveRecord {
      * @return Scholartgist the static model class
      */
     public $id;
-    public $is_history;
+    public $is_history = 1;
     
     public static function model($className = __CLASS__) {
         return parent::model($className);

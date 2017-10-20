@@ -307,6 +307,43 @@ $this->renderPartial('_x_title', array(
                 <?php } ?>
                
                 <?php } else if($person_type == 'student') { ?>
+                
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <?php
+                            echo $form->labelEx($model, 'student_proposal_path') . " <span class='required'>*</span>";
+                            if(empty(Yii::app()->session['tmpReadOnly']))
+                                echo CHtml::activeFileField($model, 'student_proposal', array());
+                            ?>
+                        </div>
+                        <?php if(empty(Yii::app()->session['tmpReadOnly'])) { ?>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <?php
+                                echo "<br/>";
+                                echo $form->error($model, 'student_proposal', array(
+                                    'class' => '',
+                                    'style' => 'color:#b94a48;',
+                                ));
+                                ?>
+                            </div>
+                        <?php } ?>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <?php
+                            if (!empty($model->student_proposal_path)) {
+                                $link = '<i class="fa fa-download"></i>  Download Portfolio';
+                                $addUrl = Yii::app()->createUrl('tgist/download', array(
+                                    'typedw' => 'student_proposal_path',
+                                    'scholar' => $scholar_type
+                                ));
+                                echo CHtml::link($link, $addUrl, array(
+                                    'class' => 'btn btn-info',
+                                    'style' => 'float: left;'
+                                ));
+                            }
+                            ?>
+                        </div>
+                    </div>
+                
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <?php
@@ -383,6 +420,7 @@ $this->renderPartial('_x_title', array(
                             ?>
                         </div>
                     </div>
+                
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <?php
@@ -418,6 +456,7 @@ $this->renderPartial('_x_title', array(
                             ?>
                         </div>
                     </div>
+                
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <?php

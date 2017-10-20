@@ -515,31 +515,6 @@ $this->renderPartial('../site/_x_title', array(
             } else if (is_experience == '1') {
                 $('#experience_box').show();
                 $('#TgistExperienceForm_is_experience').val() == $('input[name="TgistExperienceForm[is_experience]"]:checked').val();
-                $('#TgistExperienceForm_portfolio_journal_international').val('');
-                $('#TgistExperienceForm_portfolio_journal_incountry').val('');
-                $('#TgistExperienceForm_portfolio_patent').val('');
-                $('#TgistExperienceForm_portfolio_prototype').val('');
-                $('#TgistExperienceForm_portfolio_conference_international').val('');
-                $('#TgistExperienceForm_portfolio_conference_incountry').val('');
-                $('#TgistExperienceForm_portfolio_award').val('');
-                $('#TgistExperienceForm_portfolio_other').val('');
-                $('#TgistExperienceForm_portfolio_journal_international_amount').val('');
-                $('#TgistExperienceForm_portfolio_journal_incountry_amount').val('');
-                $('#TgistExperienceForm_portfolio_patent_amount').val('');
-                $('#TgistExperienceForm_portfolio_prototype_amount').val('');
-                $('#TgistExperienceForm_portfolio_conference_international_amount').val('');
-                $('#TgistExperienceForm_portfolio_conference_incountry_amount').val('');
-                $('#TgistExperienceForm_portfolio_award_amount').val('');
-                $('#TgistExperienceForm_portfolio_other_text').val('');
-                $('#TgistExperienceForm_portfolio_journal_international_desc').val('');
-                $('#TgistExperienceForm_portfolio_journal_incountry_desc').val('');
-                $('#TgistExperienceForm_portfolio_patent_desc').val('');
-                $('#TgistExperienceForm_portfolio_prototype_desc').val('');
-                $('#TgistExperienceForm_portfolio_conference_international_desc').val('');
-                $('#TgistExperienceForm_portfolio_conference_incountry_desc').val('');
-                $('#TgistExperienceForm_portfolio_award_desc').val('');
-                $('#TgistExperienceForm_portfolio_other_desc').val('');
-                $('#TgistExperienceForm_portfolio_other_amount').val('');
             }
         });
 

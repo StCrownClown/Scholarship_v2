@@ -3,6 +3,7 @@
 $person_type = ConfigWeb::getActivePersonType();
 
 $isHistory = "style='display:none;'";
+$model->is_history = 1;
 if ($model->is_history == '1') {
     $isHistory = '';
 }
@@ -174,6 +175,7 @@ $this->renderPartial('../site/_x_title', array(
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/datatables/dataTables.scroller.min.js"></script>
 
 <script type="text/javascript">
+//STCCTODE
     $(document).ready(function () {
         $('#datatable-responsive').DataTable();
         $('input[name="TgistHistoryForm[is_history]"]').change(function () {

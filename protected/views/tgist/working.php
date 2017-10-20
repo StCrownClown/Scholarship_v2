@@ -58,6 +58,7 @@ $this->renderPartial('../site/_x_title', array(
                 <br/>
 
                 <div id="work_box" <?php echo $isWork; ?>>
+                    
                     <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <?php
@@ -273,12 +274,14 @@ $this->renderPartial('../site/_x_title', array(
                 $('#TgistWorkingForm_work_location').val('');
                 $('#TgistWorkingForm_work_phone').val('');
                 $('#TgistWorkingForm_work_fax').val('');
+                $('#TgistWorkingForm_work_position').val('');
             } else if (is_work == '1') {
                 $('#work_box').show();
                 $('#TgistWorkingForm_work_company').val('');
                 $('#TgistWorkingForm_work_location').val('');
                 $('#TgistWorkingForm_work_phone').val('');
                 $('#TgistWorkingForm_work_fax').val('');
+                $('#TgistWorkingForm_work_position').val('');
             }
         });
         $('input[name="TgistWorkingForm[is_workwithproject]"]').change(function () {

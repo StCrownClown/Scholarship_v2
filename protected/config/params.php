@@ -25,6 +25,7 @@ return array(
         'tgist' => array(
             'student',
             'mentor',
+            'professor',
         )
     ),
     'Status' => array(

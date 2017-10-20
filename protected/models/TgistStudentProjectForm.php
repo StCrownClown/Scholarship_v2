@@ -48,12 +48,8 @@ class TgistStudentProjectForm extends CActiveRecord {
     public $textbook;
     public $thesis;
     public $others;
-    public $course_should_study;
-    public $professor_support;
 
     public $professor_id;
-    public $professor_accord_nstda;
-    public $professor_nstda_cooperation;
     public $professor_research_fund;
     public $professor_research_name;
     public $professor_research_id;
@@ -64,12 +60,7 @@ class TgistStudentProjectForm extends CActiveRecord {
     public $professor_budget;
     
     public $mentor_id;
-    public $mentor_accord_nstda;
-    public $mentor_nstda_cooperation;
-    
     public $industrial_id;
-    public $industrial_accord_nstda;
-    public $industrial_nstda_cooperation;
     
     public $scholar_status;
     public $status;
@@ -106,13 +97,10 @@ class TgistStudentProjectForm extends CActiveRecord {
             array('scholar_education, cooperation_nstda, cooperation_university, cooperation_industrial, project_period, project_commercial, project_public', 'safe'),
             array('project_profit, project_other_connect, project_prototype_ind, project_prototype_gnd, project_prototype_lab, project_commercial', 'safe'),
             array('project_public, academic_article_nat, academic_article_int, project_conference_nat, project_conference_int, period_in_industrial', 'safe'),
-            array('professor_support, professor_accord_nstda, professor_nstda_cooperation, professor_research_fund, professor_research_name', 'safe'),
+            array('professor_research_fund, professor_research_name', 'safe'),
             array('professor_research_id, professor_research_cluster, professor_program_research, professor_project_begin, professor_project_end', 'safe'),
-            array('professor_budget, mentor_accord_nstda, mentor_nstda_cooperation, industrial_accord_nstda, industrial_nstda_cooperation, course_should_study', 'safe'),
-            array('expect, scholar_education, project_name_th, project_name_en, scope, project_period, cooperation_nstda, cooperation_university, cooperation_industrial, project_profit, project_other_connect, course_should_study, professor_support', 'reqOther'),
-            array('mentor_accord_nstda, mentor_nstda_cooperation', 'reqByPersonType', 'mentor'),
-            array('professor_nstda_cooperation, professor_accord_nstda', 'reqByPersonType', 'professor'),
-            array('industrial_accord_nstda, industrial_nstda_cooperation', 'reqByPersonType', 'industrial'),
+            array('professor_budget', 'safe'),
+            array('scholar_education, project_name_th, project_name_en, scope, project_period, cooperation_nstda, cooperation_university, cooperation_industrial, project_profit, project_other_connect', 'reqByPersonType', 'student'),
         );
     }
     
@@ -122,107 +110,7 @@ class TgistStudentProjectForm extends CActiveRecord {
             $this->addError($attribute, $this->attributeLabels()[$attribute] . ' ไม่ควรเป็นค่าว่าง');
         }
     }
-    
-    public function reqOther($attribute, $params) {
-        if ($this->$params[0] == '0' && empty($this->$attribute)) {
-            $this->addError($attribute, $this->attributeLabels()[$attribute] . ' ไม่ควรเป็นค่าว่าง');
-        }
-    }
 
-//    public function limitStart($attribute,$params){
-//        $begin_from = Yii::app()->params['tgist_project_sub_begin_min'];
-//        $begin_max = date('Y-m-d', strtotime(Yii::app()->params['tgist_project_sub_begin_min'] . ' +6 month'));
-//        $curr_begin = str_replace('-', '', ConfigWeb::formatDataViewToDB($this->$params[0]));
-//        $from = str_replace('-', '', $begin_from);
-//        if($curr_begin < $from){
-//            $this->addError($attribute, 'วันเริ่มโครงการย่อยต้องอยู่ในช่วง '
-//                    . ''.date("d/m/Y", strtotime($begin_from)).''
-//                    . ' ถึง '
-//                    . ''.date("d/m/Y", strtotime($begin_max)));
-//        }
-////        if ($isOk)
-////            $this->addError($attribute, 'วันเริ่มโครงการย่อยต้องไม่เกินวันที่ '
-////                    .date("d/m/Y", strtotime($begin_from)));
-//    }
-//    
-//    public function limitEnd($attribute,$params){
-//        $end_last = Yii::app()->params['tgist_project_end_max'];
-//        $curr_end = str_replace('-', '', ConfigWeb::formatDataViewToDB($this->$params[0])); 
-//        $last = str_replace('-', '', $end_last);
-//        if($curr_end > $last){
-//            $this->addError($attribute, 'วันเริ่มโครงการย่อยต้องไม่เกินวันที่ ' 
-//                    . date("d/m/Y", strtotime($end_last)));
-//        }
-//    }
-//    
-//    public function PeriodBetweenPrimaryPrj($attribute,$params){
-//        $begin = ConfigWeb::formatDataViewToDB($this->$params[0]);
-//        $end = ConfigWeb::formatDataViewToDB($this->$params[1]);
-//        $cur_start = new DateTime($begin);
-//        $cur_end = new DateTime($end);
-//
-//        $criteria = new CDbCriteria ();
-//        $criteria->condition = "id = " . ConfigWeb::getActiveScholarId();
-//        $criteria->limit = 1;
-//        $Scholar = Scholar::model()->find($criteria);
-//
-//        $criteria->condition = "id = " . $Scholar->ScholarTgist->project_id;
-//        $criteria->limit = 1;
-//        $Project = Project::model()->find($criteria);
-//
-//        $pk_begin = $Project->begin;
-//        $pk_end = $Project->end;
-//
-//        $pk_begin = ConfigWeb::formatDataViewToDB($pk_begin);
-//        $pk_end = ConfigWeb::formatDataViewToDB($pk_end);
-//        $datetime_pk_begin = new DateTime($pk_begin);
-//        $datetime_pk_end = new DateTime($pk_end);
-//
-//        if(!($datetime_pk_begin <= $cur_start && $datetime_pk_end >= $cur_end)){
-//            $this->addError($attribute, 'ระยะเวลาโครงการไม่ตรงกับข้อกำหนด<br/>(โครงการย่อยระยะเวลาต้องไม่เกินโครงการหลัก '.date('d/m/Y', strtotime($pk_begin)).' - '.date('d/m/Y', strtotime($pk_end)).')');
-//        }
-//    }
-//    
-//    public function PeriodBetween6M_12M($attribute,$params){
-//        $begin = $this->$params[0];
-//        $end = $this->$params[1];
-//	$diff = ConfigWeb::GetPeriodDate($begin, $end);
-//        if ($diff) {
-//            if(!($diff->m >= 6 && $diff->m <= 11 || ($diff->y == 1 && $diff->m == 0 && $diff->d == 0))){
-//                $this->addError($attribute, 'ระยะเวลาโครงการไม่ตรงกับข้อกำหนด<br/>(ระยะเวลาต้องไม่ต่ำกว่า 6 เดือนหรือมากกว่า 12 เดือน)');
-//            }
-//        }
-//    }
-//    
-//    public function reqCheckOnce($attribute, $params) {
-//        $cnt = 0;
-//        foreach ($params as &$value) {
-//            $cnt = $cnt + $this->$value;
-//        }
-//
-//        if ($cnt == 0) {
-//            $this->addError($attribute, 'โปรดเลือกอย่างน้อย 1 / Please select one.');
-//        }
-//    }
-//
-//    public function reqIsCheck($attribute, $params) {
-//        if ($this->$params[0] == '1' && empty($this->$attribute)) {
-//            $this->addError($attribute, $this->attributeLabels()[$attribute] . ' ไม่ควรเป็นค่าว่าง');
-//        }
-//    }
-//
-//    public function reqIsOther($attribute, $params) {
-//        if (!empty($this->$params[0]) && empty($this->$attribute)) {
-//            $this->addError($attribute, $this->attributeLabels()[$attribute] . ' ไม่ควรเป็นค่าว่าง / Should not be blank');
-//        }
-//    }
-//    
-//    public function reqIgnore2($attribute, $params) {
-//        if (!is_numeric($this->$attribute)) {
-//            if(!empty($this->$params[0]) && empty($this->$attribute))
-//                $this->addError($attribute, $this->attributeLabels()[$attribute] . ' ไม่ควรเป็นค่าว่าง');
-//        }
-//    }
     /**
      * @return array relational rules.
      */
@@ -242,17 +130,19 @@ class TgistStudentProjectForm extends CActiveRecord {
             'id' => 'ID',
             'project_begin' => 'วันเริ่มโครงการย่อย',
             'project_end' => 'วันสิ้นสุดโครงการย่อย',
-            'expect' => 'ผลที่คาดว่าจะได้รับจากการรับนักศึกษาเพื่อทำวิจัยเรื่องนี้ <span class="required">*</span>',
+            'expect' => 'ผลที่คาดว่าจะได้รับจากการรับนักศึกษาเพื่อทำวิจัยเรื่องนี้',
             
             'scholar_education' => 'ต้องการเสนอขอรับทุนในระดับ <span class="required">*</span>',
             'project_name_th' => 'ชื่อโครงการวิจัยเพื่อวิทยานิพนธ์ที่เสนอขอรับทุน(ภาษาไทย) <span class="required">*</span>',
             'project_name_en' => 'ชื่อโครงการวิจัยเพื่อวิทยานิพนธ์ที่เสนอขอรับทุน(ภาษาอังกฤษ) <span class="required">*</span>',
             'scope' => 'ขอบเขต แนวทางการศึกษาวิจัย และประโยชน์ที่จะได้รับจากงานวิจัย <span class="required">*</span>',
             'project_period' => 'แนวทางการศึกษาวิจัยใช้เวลาในการศึกษาวิจัยของนักศึกษา <span class="required">*</span>',
-            'cooperation_nstda' => 'ลักษณะความร่วมมือในการทำวิทยานิพนธ์ของนิสิต/นักศึกษา และสวทช. <span class="required">*</span>',
+            'cooperation_nstda' => 'ลักษณะความร่วมมือในการทำวิทยานิพนธ์ของนิสิต/นักศึกษา และสวทช. <span class="required">*</span> '
+                                . '<br>**ลักษณะความร่วมมือในการทำวิทยานิพนธ์ของนิสิต/นักศึกษา สวทช. มหาวิทยาลัย หรืออื่นๆ เช่น หน่วยงานเอกชน หรือหน่วยงานร่วมมืออื่นๆ แบ่งเป็นสัดส่วน โดยรวมกันแล้วได้ 100%',
             'cooperation_university' => 'ลักษณะความร่วมมือในการทำวิทยานิพนธ์ของนิสิต/นักศึกษา และมหาวิทยาลัย <span class="required">*</span>',
             'cooperation_industrial' => 'หรืออื่นๆ เช่น หน่วยงานเอกชน หรือหน่วยงานร่วมมืออื่นๆ <span class="required">*</span>',
-            'project_profit' => 'ประโยชน์ที่คาดว่าจะได้รับจากงานวิจัย <span class="required">*</span>',
+            'project_profit' => 'ประโยชน์ที่คาดว่าจะได้รับจากงานวิจัย <span class="required">*</span> '
+                            . '<br> ***ประโยชน์ที่คาดว่าจะได้รับจากงานวิจัยเพื่อวิทยานิพนธ์ที่ขอรับทุน(รายละเอียดอย่างย่อ)รายละเอียดที่ครบถ้วนสมบูรณ์กรุณากรอกใน แบบฟอร์มข้อเสนอโครงการ โดยดาวน์โหลดจากด้านบน แล้วอัพโหลดไฟล์ในหน้า Attachment ***',
             'project_other_connect' => 'โครงการวิจัยเพื่อวิทยานิพนธ์นี้มีส่วนเกี่ยวข้องหรือเชื่อมโยงภาคเอกชน ผู้ประกอบการหรือองค์กรอื่นๆหรือไม่ อย่างไร <span class="required">*</span>',
             'knowledge' => 'องค์ความรู้ จำนวน(เรื่อง)',
             'new_process' => 'กระบวนการใหม่ จำนวน(กระบวนการ)',
@@ -272,15 +162,6 @@ class TgistStudentProjectForm extends CActiveRecord {
             'textbook' => 'หนังสือ/ตำราวิชาการ (Copyright)',
             'thesis' => 'วิทยานิพนธ์ (รายงานโครงงาน)',
             'others' => 'อื่นๆ (หากมี)',
-            'course_should_study' => 'รายวิชาที่นักศึกษาควรต้องลงเรียนเพื่อให้สามารถทำงานวิจัยได้(โปรดระบุ อย่างน้อย 2รายวิชา) <span class="required">*</span>',
-            'professor_support' => 'อาจารย์ที่ปรึกษา  <span class="required">*</span>',
-            'professor_accord_nstda' => 'ความสอดคล้องของโครงงานวิจัยกับเป้าหมายของ สวทช. <span class="required">*</span>',
-            'professor_nstda_cooperation' => 'ความร่วมมือทางวิชาการและงานวิจัยระหว่างอาจารย์ที่ปรึกษาและ สวทช. ที่ผ่านมา และในอนาคต <span class="required">*</span>',
-            'mentor_accord_nstda' => 'ความสอดคล้องของโครงงานวิจัยกับเป้าหมายของ สวทช. <span class="required">*</span>',
-            'mentor_nstda_cooperation' => 'ความร่วมมือทางวิชาการและงานวิจัยระหว่างอาจารย์ที่ปรึกษาและ สวทช. ที่ผ่านมา และในอนาคต <span class="required">*</span>',
-            'industrial_accord_nstda' => 'ความสอดคล้องของโครงงานวิจัยกับเป้าหมายของ สวทช. <span class="required">*</span>',
-            'industrial_nstda_cooperation' => 'ความร่วมมือทางวิชาการและงานวิจัยระหว่างอาจารย์ที่ปรึกษาและ สวทช. ที่ผ่านมา และในอนาคต <span class="required">*</span>',
-            
 //            'scholar_id' => 'Scholar',
 //            'professor_id' => 'อาจารย์ที่ปรึกษา',
 //            'mentor_id' => 'นักวิจัย สวทช.',

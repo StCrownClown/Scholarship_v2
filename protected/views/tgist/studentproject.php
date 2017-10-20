@@ -76,32 +76,6 @@ $this->renderPartial('../site/_x_title', array(
                 </div>
                 
                 <div class="form-group">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <?php
-                        echo $form->labelEx($model, 'professor_accord_nstda') . '<br/>';
-                        $this->widget('booster.widgets.TbSelect2', array(
-                            'asDropDownList' => TRUE,
-                            'model' => $model,
-                            'name' => 'TgistStudentProjectForm[professor_accord_nstda]',
-                            'data' => array(
-                                            'คลัสเตอร์เกษตรและอาหาร' => ' คลัสเตอร์เกษตรและอาหาร',
-                                            'คลัสเตอร์พลังงานและสิ่งแวดล้อม' => ' คลัสเตอร์พลังงานและสิ่งแวดล้อม',
-                                            'คลัสเตอร์สุขภาพและการแพทย์' => ' คลัสเตอร์สุขภาพและการแพทย์',
-                                            'คลัสเตอร์ทรัพยากร ชุมชน และผู้ด้อยโอกาส' => ' คลัสเตอร์ทรัพยากร ชุมชน และผู้ด้อยโอกาส',
-                                            'คลัสเตอร์อุตสาหกรรมการผลิตและบริการ' => ' คลัสเตอร์อุตสาหกรรมการผลิตและบริการ',
-                                            'Cross Cutting Technology Program' => ' Cross Cutting Technology Program'),
-                            'value' => $model->professor_accord_nstda,
-                            'options' => array(
-                                'placeholder' => '--- เลือก ---',
-                                'width' => '100%',
-                            ),
-                        ));
-//                        echo $form->error($model, 'professor_accord_nstda');
-                        ?>
-                    </div>
-                </div>
-                
-                <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <?php
                         echo $form->textAreaGroup($model, 'scope', array(
@@ -215,16 +189,11 @@ $this->renderPartial('../site/_x_title', array(
                     </div>
                 </div>
                 
-                <div class="form-group ">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label><span class="required">**ลักษณะความร่วมมือในการทำวิทยานิพนธ์ของนิสิต/นักศึกษา สวทช. มหาวิทยาลัย หรืออื่นๆ เช่น หน่วยงานเอกชน หรือหน่วยงานร่วมมืออื่นๆ แบ่งเป็นสัดส่วน โดยรวมกันแล้วได้ 100%</label>
-                    </div>
-                </div>
-                
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <?php
                         echo $form->textAreaGroup($model, 'project_profit', array(
+                            'labelOptions' => array('style' => 'text-align: left !important;'),
                             'wrapperHtmlOptions' => array(
                                 'class' => 'form-control',
                             ),
@@ -259,22 +228,17 @@ $this->renderPartial('../site/_x_title', array(
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group ">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <?php
-                        echo $form->textAreaGroup($model, 'expect', array(
-                            'wrapperHtmlOptions' => array(
-                                'class' => 'form-control',
-                            ),
-                            'widgetOptions' => array(
-                                'htmlOptions' => array(
-                                    'rows' => 5,
-                                    'width' => '100%',
-                                    'placeholder' => '',
-                                ),
-                            )
-                        ));
-                        ?>
+                        <label>ผลที่คาดว่าจะได้รับจากการรับนักศึกษาเพื่อทำวิจัยเรื่องนี้ <span class="required">*</span>
+                        <br><u>นักศึกษาระดับปริญญาเอก</u> จะต้องส่งวิทยานิพนธ์และผลงานตีพิมพ์ในวารสารวิชาการ/วารสารวิจัยนานาชาติต่างประเทศในฐานข้อมูลระดับนานาชาติหรือผลงานอื่นที่เทียบเท่า
+                        <br><u>นักศึกษาระดับปริญญาโท</u> จะต้องส่งวิทยานิพนธ์และผลงานตีพิมพ์ในวารสารวิจัยหรือผลงานอื่นที่เทียบเท่าผลงาน
+                        <br>
+                        <br>นักศึกษาทุกระดับชั้นจะต้องระบุข้อความขอบคุณ(โครงการฯ) โดยมีเนื้อหาว่า
+                            "ผู้รับทุนได้รับการสนับสนุนเงินทุนจากสำนักงานพัฒนาวิทยาศาสตร์และเทคโนโลยีแห่งชาติ 
+                            ตามสัญญารับทุนสนับสนุนการศึกษาระดับบัณฑิตศึกษา โครงการทุนสถาบันบัณฑิตวิทยาศาสตร์ และเทคโนโลยีไทย TGIST XX-XX-XXX"
+                        <br>
+                        </label>
                     </div>
                 </div>
                 
@@ -542,60 +506,6 @@ $this->renderPartial('../site/_x_title', array(
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <?php
-                        echo $form->textAreaGroup($model, 'course_should_study', array(
-                            'wrapperHtmlOptions' => array(
-                                'class' => 'form-control',
-                            ),
-                            'widgetOptions' => array(
-                                'htmlOptions' => array(
-                                    'rows' => 2,
-                                    'width' => '50%',
-                                    'placeholder' => '',
-                                ),
-                            )
-                        ));
-                        ?>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <?php
-                        echo $form->labelEx($model, 'professor_support') . ' <br/>';
-                        echo $form->radioButtonList($model, 'professor_support', array(
-                            'sometime' => ' ไม่สามารถดูแลนักศึกษาเพื่อทำวิจัย(วิทยานิพนธ์) ได้เต็มเวลา',
-                            'fulltime' => ' สามารถดูแลนักศึกษาเพื่อทำวิจัย(วิทยานิพนธ์) ได้เต็มเวลา'), array(
-                            'labelOptions' => array('style' => 'display:inline'), // add this code
-                            'separator' => '<br/>',
-                        ));
-                        echo $form->error($model, 'professor_support');
-                        echo '<br/>';
-                        ?>
-                    </div>
-                </div>
-                <br/>
-                
-                <div class="form-group">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <?php
-                        echo $form->textAreaGroup($model, 'professor_nstda_cooperation', array(
-                            'wrapperHtmlOptions' => array(
-                                'class' => 'form-control',
-                            ),
-                            'widgetOptions' => array(
-                                'htmlOptions' => array(
-                                    'rows' => 5,
-                                    'width' => '50%',
-                                    'placeholder' => '',
-                                ),
-                            )
-                        ));
-                        ?>
-                    </div>
-                </div>
 
             <div class="actionBar">
                 <?php

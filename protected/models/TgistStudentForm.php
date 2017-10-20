@@ -31,13 +31,8 @@ class TgistStudentForm extends CActiveRecord {
         return array(
 //            array('email', 'required'),
 //            array('fname, lname, email', 'length', 'max' => 100),
-//            array('mobile', 'length', 'max' => 10, 'min' => 10),
-//            array('mobile', 'numerical'),
             array('email', 'email'),
             array('professor_id, mentor_id, industrial_id', 'safe'),
-//            array('id_card', 'length', 'max' => 30),
-//            array('id_card', 'uniqueIdCard', 'id_card', 'id'),
-//            array('id_card', 'CheckDigiIdCard', 'nationality_id'),
         );
     }
 

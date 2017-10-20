@@ -323,7 +323,8 @@ class StatusData {
                         }
                         echo '</ul>';
                     }
-                    else if ($data['type'] == 'nuirc' || $data['type'] == 'tgist') {
+                    
+                    else if ($data['type'] == 'nuirc') {
                         echo '<ul class="dropdown-menu" role="menu" style="display:none;" id="dropdown_' . $data['id'] . '">';
                         if($data['status'] != 'draft'){
                             
@@ -376,7 +377,7 @@ class StatusData {
                             }
                             
                             // View Industrial
-                            if (ConfigWeb::getActivePersonType() != 'industrial' && $data['type'] == 'nuirc') {
+                            if (ConfigWeb::getActivePersonType() != 'industrial') {
                                 $addText = '<i class="fa fa-graduation-cap"></i> ข้อมูลบริษัท/ภาคอุตสาหกรรม / Industrial';
                                 $addUrl = Yii::app()->createUrl('scholar/readonly', array(
                                     'id' => $data['id'],
@@ -488,6 +489,132 @@ class StatusData {
                                     'class' => 'btn',
                                     'style' => 'float: left;',
                                     'confirm' => "คุณต้องส่ง Email แจ้ง บริษัท/ภาคอุตสาหกรรม(อีกครั้ง) หรือไม่?"
+                                    . "\nDo you want to send email (again)?",
+                                ));
+                                echo '</li>';
+                            }
+                        }
+                        echo '</ul>';
+                    }
+                    
+                    else if ($data['type'] == 'tgist') {
+                        echo '<ul class="dropdown-menu" role="menu" style="display:none;" id="dropdown_' . $data['id'] . '">';
+                        if($data['status'] != 'draft'){
+                            
+                            // View Student
+                            if (ConfigWeb::getActivePersonType() != 'student') {
+                                $addText = '<i class="fa fa-graduation-cap"></i> ข้อมูลนักเรียน/นักศึกษา / Student';
+                                $addUrl = Yii::app()->createUrl('scholar/readonly', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'utype' => 'student',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                ));
+                                echo '</li>';
+                            }
+                            
+                            // View Professor
+                            if (ConfigWeb::getActivePersonType() != 'professor') {
+                                $addText = '<i class="fa fa-university"></i> ข้อมูลอาจารย์ที่ปรึกษา / Professor';
+                                $addUrl = Yii::app()->createUrl('scholar/readonly', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'utype' => 'professor',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                ));
+                                echo '</li>';
+                            }
+                            
+                            // View Mentor
+                            if (ConfigWeb::getActivePersonType() != 'mentor') {
+                                $addText = '<i class="fa fa-graduation-cap"></i> ข้อมูลนักวิจัยสวทช. / Mentor';
+                                $addUrl = Yii::app()->createUrl('scholar/readonly', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'utype' => 'mentor',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                ));
+                                echo '</li>';
+                            }
+                            
+                        }
+                        
+                        if($data['status'] == 'pending_recommendations' || $data['status'] == 'confirm'){
+                            
+                            if (ConfigWeb::getActivePersonType() == 'student') {
+                                
+                                // เปลี่ยน Email อาจารย์ที่ปรึกษา
+                                $addText = '<i class="fa fa-repeat"></i> เปลี่ยน Email อาจารย์ที่ปรึกษา';
+                                $addUrl = Yii::app()->createUrl('scholar/act', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'action' => 'changeemail',
+                                    'utype' => 'professor',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                ));
+                                echo '</li>';
+
+                                // เปลี่ยน Email นักวิจัยสวทช.
+                                $addText = '<i class="fa fa-repeat"></i> เปลี่ยน Email นักวิจัยสวทช.';
+                                $addUrl = Yii::app()->createUrl('scholar/act', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'action' => 'changeemail',
+                                    'utype' => 'mentor',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                ));
+                                echo '</li>';
+
+                                // ส่ง Email ไปยังอาจารย์ที่ปรึกษา Send mail to professor
+                                $addText = '<i class="fa fa-envelope"></i> ส่ง Email ไปยังอาจารย์ที่ปรึกษา / Send mail to professor';
+                                $addUrl = Yii::app()->createUrl('scholar/act', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'action' => 'resend',
+                                    'utype' => 'professor',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                    'confirm' => "คุณต้องส่ง Email แจ้ง อาจารย์ที่ปรึกษา(อีกครั้ง) หรือไม่?"
+                                    . "\nDo you want to send email (again)?",
+                                ));
+                                echo '</li>';
+
+                                // ส่ง Email ไปยังนักวิจัยสวทช. Send mail to mentor
+                                $addText = '<i class="fa fa-envelope"></i> ส่ง Email ไปยังนักวิจัยสวทช. / Send mail to mentor';
+                                $addUrl = Yii::app()->createUrl('scholar/act', array(
+                                    'id' => $data['id'],
+                                    'scholartype' => strtolower($data['type']),
+                                    'action' => 'resend',
+                                    'utype' => 'mentor',
+                                ));
+                                echo '<li>';
+                                echo CHtml::link($addText, $addUrl, array(
+                                    'class' => 'btn',
+                                    'style' => 'float: left;',
+                                    'confirm' => "คุณต้องส่ง Email แจ้ง ไปยังนักวิจัยสวทช.(อีกครั้ง) หรือไม่?"
                                     . "\nDo you want to send email (again)?",
                                 ));
                                 echo '</li>';
