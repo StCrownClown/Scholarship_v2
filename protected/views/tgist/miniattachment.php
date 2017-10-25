@@ -550,6 +550,36 @@ $this->renderPartial('_x_title', array(
             </div>
 
             <div class="actionBar">
+                <div class="modal animate fadeIn" style="text-align: left;padding-left: 17px;background-color: rgba(0,0,0,.5);">
+                  <div class="modal-dialog modal-lg" style="margin: 10% auto;">
+                    <div class="modal-content">
+                      <div class="modal-header" style="height: 50px;">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                        <h2 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> ข้อควรทราบ</h2>
+                      </div>
+                      <div class="modal-body">
+                          <h3 class="well">ข้าพเจ้าขอรับรองว่าข้อความดังกล่าวข้างต้นเป็นความจริงทุกประการ หากตรวจสอบพบว่าข้อมูลและหลักฐานต่างๆ ไม่เป็นความจริง ข้าพเจ้ายินยอมให้ตัดสิทธิ์การรับสมัครได้ และผลการตัดสินของโครงการถือเป็นข้อยุติ</h3>
+                      </div>
+                      <div class="actionBar">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด / Close</button>
+                        <?php 
+                        $this->widget('booster.widgets.TbButton', array(
+                            'label' => 'ยินยอม / Agree',
+                            'buttonType' => 'submit',
+                            'htmlOptions' => array(
+                                'name' => 'saveapply',
+                                'style' => 'float: right;',
+                                'class' => 'btn btn-success',
+                                'confirm' => "ยืนยันการบันทึกและสมัคร กรุณายืนยัน ?"
+                                . "\nDo you want to Save & Apply?",
+                            ),
+                        ));
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
                 <?php
                 $urlBack = WorkflowData::WorkflowUrlBack(Yii::app()->urlManager->parseUrl(Yii::app()->request));
                 WorkflowData::getActionBar($this, $urlBack, FALSE);
@@ -577,7 +607,28 @@ $this->renderPartial('_x_title', array(
                                     'class' => 'btn btn-warning',
                                 ),
                             ));
-                        }else if($model->status == Yii::app()->params['Status']['Send']){
+                        } else if($model->status == Yii::app()->params['Status']['Send']){
+                            $this->widget('booster.widgets.TbButton', array(
+                                'label' => 'บันทึก / Save',
+                                'buttonType' => 'submit',
+                                'htmlOptions' => array(
+                                    'name' => 'save',
+                                    'style' => 'float: right;',
+                                    'class' => 'btn btn-warning',
+                                ),
+                            ));
+                        } 
+                        else if ($model->status == Yii::app()->params['Status']['Confirm']) {
+                            $this->widget('booster.widgets.TbButton', array(
+                                'label' => 'บันทึกและสมัคร / Save&Apply',
+                                'htmlOptions' => array(
+                                    'type' => 'button',
+                                    'style' => 'float: right;',
+                                    'class' => 'btn btn-success',
+                                    'onclick' => 'ToggleModal()',
+                                ),
+                            ));
+
                             $this->widget('booster.widgets.TbButton', array(
                                 'label' => 'บันทึก / Save',
                                 'buttonType' => 'submit',
@@ -588,7 +639,7 @@ $this->renderPartial('_x_title', array(
                                 ),
                             ));
                         }
-                    }else {
+                    } else {
                         $this->widget('booster.widgets.TbButton', array(
                             'label' => 'ถัดไป / Next →',
                             'buttonType' => 'submit',
@@ -599,7 +650,7 @@ $this->renderPartial('_x_title', array(
                             ),
                         ));
                     }
-                }else {
+                } else {
                     $this->widget('booster.widgets.TbButton', array(
                         'label' => 'ถัดไป / Next →',
                         'buttonType' => 'submit',
@@ -622,7 +673,17 @@ $this->renderPartial('_x_title', array(
     </div>
 </div>
 <script>
+    function ToggleModal(){
+        $(".modal").modal("show");
+        $(".modal-backdrop").remove();
+    }
+    
     $(document).ready(function () {
-
+<?php
+if (!empty(Yii::app()->session['tmpReadOnly'])) {
+    echo "$('form select,form input, form textarea').attr('disabled', 'disabled').attr('readonly', 'readonly');";
+}
+echo "$('.x_panel').show();";
+?>
     });
 </script>

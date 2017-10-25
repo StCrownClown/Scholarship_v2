@@ -6,6 +6,7 @@ return array(
     'adminEmail' => array('jakkrich.changgon@nstda.or.th','siam.nak@biotec.or.th','nstda_stemworkforce@hotmail.com'),
     'adminStemEmail' => 'noreply@nstda.or.th',
     'adminStemTell' => '02-564-7000 ต่อ 1462 ,1461, 1460',
+    'adminTgistEmail' => array('amornrat.sangthong@nstda.or.th','supattra@nstda.or.th','wareew@nstda.or.th'),
     'adminPassword' => 'admin', // test , webNoSSO
     'debugMail' => true, // send mail to admin. user not mode test
     'errorReportOn' => true, // error_reporting
@@ -47,7 +48,7 @@ return array(
     'ProjectPlanLink' => '/../template/stem/ExProjectPlan.docx',
     'IndustrialJoinLink' => '/../template/stem/IndustrialJoin.pdf',
 //   Alert Confirm Status
-   'EmailTemplateAlertConfirmSubject' => "NSTDA Scholarships - ใบสมัครทุน ##SCHOLARTYPE## ในส่วน นักศึกษาและภาคอุตสาหกรรม กรอกข้อมูลในระบบครบถ้วนแล้ว ",
+    'EmailTemplateAlertConfirmSubject' => "NSTDA Scholarships - ใบสมัครทุน ##SCHOLARTYPE## ในส่วน นักศึกษาและภาคอุตสาหกรรม กรอกข้อมูลในระบบครบถ้วนแล้ว ",
     'EmailTemplateAlertConfirmBody' => ""
     . "เรียน คุณ##PERSONNAME##<br><br>"
     . "นักศึกษาและภาคอุตสาหกรรม กรอกข้อมูลในระบบครบถ้วนแล้ว<br>"
@@ -69,8 +70,8 @@ return array(
     . "<br>"
     . "หากมีปัญหาหรือคำถาม สามารถติดต่อกลับ ##TELLADMIN##<br><br>",
 
-//   NUIRC, TGIST Confirm Alert
-   'EmailTemplateAlertConfirmSubject' => "NSTDA Scholarships - ใบสมัครทุน ##SCHOLARTYPE## ในส่วน อาจารย์ที่ปรึกษา, นักวิจัยสวทช. และภาคอุตสาหกรรม กรอกข้อมูลในระบบครบถ้วนแล้ว ",
+//   NUIRC, TGIST Alert Confirm
+    'EmailTemplateAlertConfirmSubject' => "NSTDA Scholarships - ใบสมัครทุน ##SCHOLARTYPE## ในส่วน อาจารย์ที่ปรึกษา, นักวิจัยสวทช. และภาคอุตสาหกรรม กรอกข้อมูลในระบบครบถ้วนแล้ว ",
     'EmailTemplateAlertConfirmBody' => ""
     . "เรียน คุณ##PERSONNAME##<br><br>"
     . "อาจารย์ที่ปรึกษา, นักวิจัยสวทช. และภาคอุตสาหกรรม กรอกข้อมูลในระบบครบถ้วนแล้ว<br>"
@@ -80,6 +81,32 @@ return array(
     . "สถานะใบสมัคร(ในหน้า Home) จะเป็น \"ส่งใบสมัคร\" จึงเสร็จสิ้นขั้นตอนการสมัครคะ<br><br>"
     . "สามารถเข้าสู่ระบบได้ที่นี่ <a href='##URL##' target='_blank'>Click!!</a><br>"
     . "ขอบคุณค่ะ<br>",
+    
+//    TGIST Student Alert Pending
+    'EmailTemplateAlertPendingSubject' => "Please Certify a student to apply for ##SCHOLARTYPE## Scholarship (##PERSONTYPE## Part)",
+    'EmailTemplateAlertPendingBody' => ""
+    ."Dear Sir/Madam, ##PERSONNAME## <br><br>"
+    ."Please be informed the student names <br><br>"
+    ."is interest to (work/do the research) with you and wishes you become a ##PERSONTYPE## (##PERSONTYPE## Part) <br>"
+    ."please log-in and certify a student at Link: <a href='##URL##' target='_blank'>Click!!</a> to ensure the completeness of TGIST 2018 enrollment. <br>"
+    ."You can log-in to edit your information and attach additional files for ##SCHOLARTYPE## ##SCHOLARYEAR## enrollment from now to March 31, 2018. <br><br>"
+    ."If you have any questions or inquiries please contact <br>"
+    ."Graduate and Senior Researcher Development Section (GSD) <br>"
+    ."National Science and Technology Development Agency (NSTDA) <br>"
+    ."Email: amornrat.sangthong@nstda.or.th, supattra@nstda.or.th, wareew@nstda.or.th <br>"
+    ."Best regards GSD TEAM",
+    
+//    TGIST Advisor Alert Sent
+    'EmailTemplateAlertSentSubject' => "##PERSONTYPE## has already certified you",
+    'EmailTemplateAlertSentBody' => ""
+    ."Dear Sir/Madam, ##PERSONNAME## <br><br>"
+    ."We are pleased to inform that ##TECNAME## (##PERSONTYPE##) has already certified you <br><br>"
+    ."You can log-in to edit your information and attach additional files for ##SCHOLARTYPE## ##SCHOLARYEAR## enrollment from now to March 31, 2018. <br><br>"
+    ."If you have any questions or inquiries please contact <br>"
+    ."Graduate and Senior Researcher Development Section (GSD) <br>"
+    ."National Science and Technology Development Agency (NSTDA) <br>"
+    ."Email: amornrat.sangthong@nstda.or.th, supattra@nstda.or.th, wareew@nstda.or.th <br>"
+    ."Best regards GSD TEAM",
     
     'EmailTemplateResetPasswordSubject' => "NSTDA Scholarships - New Password!!",
     'EmailTemplateResetPasswordBody' => ""

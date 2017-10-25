@@ -101,6 +101,7 @@ $this->renderPartial('../site/_x_title', array(
                             <th class="column-title" style="width: auto;text-align: center;">ชื่อนักเรียน/นักศึกษา<br/>Student</th>
                             <?php } else if($scholar_type == 'nuirc' || $scholar_type == 'tgist') {?>
                             <th class="column-title" style="width: auto;text-align: center;">ชื่ออาจารย์/นักวิจัย/อุตสาหกรรม<br/>Professor/Mentor/Industrial</th>
+                            <th class="column-title" style="width: 100px;text-align: center;white-space: nowrap;">ประเภท<br/>Person type</th>
                             <th class="column-title" style="width: 100px;text-align: center;white-space: nowrap;">สถานะการรับรอง<br/>Verify</th>
                             <?php } ?>
                             <th class="column-title" style="width: 100px;text-align: center;white-space: nowrap;">สถานะใบสมัคร<br/>Status</th>

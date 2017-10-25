@@ -210,6 +210,7 @@ class ScholarController extends Controller {
                     s.type AS type,
                     concat(std.fname, "  ", std.lname) AS student,
                     concat(pp.fname, "  ", pp.lname) AS pro_men_ind,
+                    pp.type AS person_type,
                     s.status AS status,
                     c.status AS status_comment,
                     s.last_updated AS lastupdated
@@ -217,6 +218,7 @@ class ScholarController extends Controller {
                 LEFT JOIN comment c ON s.id = c.scholar_id 
                 LEFT JOIN person pp ON pp.id = c.person_id '
                         . $where
+                        . ' and person_id != 0'
                         . ' ORDER BY s.last_updated DESC ';
             }
         } else if ($utype == 'admin') {
@@ -262,6 +264,7 @@ class ScholarController extends Controller {
                     FROM comment c LEFT JOIN scholar s ON c.scholar_id = s.id 
                     LEFT JOIN person std ON s.student_id = std.id
                     WHERE c.person_id=$person_id
+                    AND c.scholar_id!=0
                     ORDER BY c.first_created DESC, c.last_updated DESC ";
 
         $dataProvider = new CSqlDataProvider($sql, array(

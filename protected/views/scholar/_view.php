@@ -15,6 +15,10 @@ $person_type = Yii::app()->session['person_type'];
         <?php echo CHtml::encode($data['pro_men_ind']); ?> 
     </td>
     <td class="" style="text-align: center;">
+        <?php echo CHtml::encode($data['person_type']); ?> 
+        </button>
+    </td>
+    <td class="" style="text-align: center;">
         <button type="button" class="btn btn-<?php echo InitialData::STATUS_COLOR($data['status_comment']); ?> btn-xs">
         <?php echo InitialData::STATUS($data['status_comment']); ?>
         </button>
