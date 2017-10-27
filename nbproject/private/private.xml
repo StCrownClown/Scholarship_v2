@@ -5,12 +5,9 @@
         <group>
             <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/controllers/TgistController.php</file>
             <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/config/params.php</file>
-            <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/views/tgist/working.php</file>
+            <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/controllers/ScholarController.php</file>
             <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/models/TgistHistoryForm.php</file>
             <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/models/TgistUploadAttachmentForm.php</file>
-            <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/views/tgist/history.php</file>
-            <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/controllers/NuircController.php</file>
-            <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/views/tgist/studentproject.php</file>
             <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/models/TgistWorkingForm.php</file>
             <file>file:/C:/xampp/htdocs/nstdaScholarship_v2/protected/models/TgistStudentProjectForm.php</file>
         </group>
